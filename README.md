@@ -6,5 +6,5 @@
 깃은 일반문서가 아닌 <u>소스코드</u>의 변경점을 관리하는 형상 관리 툴이다.
 
 
-<img src="https://github.com/SHINDongHyeo/TIL/issues/1#issue-1226771155"/>
+<img src="https://user-images.githubusercontent.com/96512568/166948891-d19f672a-b6bd-42f4-9396-701629fcc912.jpg"/>
 
