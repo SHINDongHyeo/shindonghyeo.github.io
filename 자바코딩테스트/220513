@@ -1,0 +1,37 @@
+# 백준 온라인 저지
+## 공 포장하기
+링크 : https://www.acmicpc.net/problem/12981
+
+```java
+package Baekjoon;
+
+import java.util.*;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int r=sc.nextInt();
+		int g=sc.nextInt();
+		int b=sc.nextInt();
+		int result=0;
+		int rA=r/3;
+		int rB=r%3;
+		int gA=g/3;
+		int gB=g%3;
+		int bA=b/3;
+		int bB=b%3;
+		int aaa=Math.max(rB, gB);
+		int maxB=Math.max(aaa, bB);
+		result+=rA;
+		result+=gA;
+		result+=bA;
+		result+=maxB;
+		System.out.println(result);
+		
+		
+	}
+}
+
+```
+틀린결과로 나오는데 어는 부분이 잘못되고 반례는 무엇인지 모르겠다.
