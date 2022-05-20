@@ -2,6 +2,7 @@
  :  Javascript Object Notation의 약어로 데이터를 구조화해서 활용 가능하게 해주는 포맷이다.
 
  ## 1) 특징
+ 1. javascript 객체 문법을 따른다.
  1. 용량이 작아서 데이터 전송에 용이하다.
  2. 단순한 데이터 표현 방법일 뿐이다.
  3. 데이터 구분이 명확하다.
@@ -113,8 +114,10 @@ public class ApiExamTranslateNmt {
 네이버에서 제공하는 파파고 OPEN API를 활용해 실습해본다.
 먼저 링크된 사이트에서 언급했듯이 애플리케이션 등록을 통해 YOUR_CLIENT_ID, YOUR_CLIENT_SECRET을 개인적으로 받아서 값으로 넣어주어야 한다.       
 
-이후에 코드를 실행시켜보면        
-{"message":{"result":{"srcLangType":"ko","tarLangType":"en","translatedText":"Hello. How are you today?","engineType":"N2MT","pivot":null,"dict":null,"tarDict":null},"@type":"response","@service":"naverservice.nmt.proxy","@version":"1.0.0"}}          
+이후에 코드를 실행시켜보면  
+
+{"message":{"result":{"srcLangType":"ko","tarLangType":"en","translatedText":"Hello. How are you today?","engineType":"N2MT","pivot":null,"dict":null,"tarDict":null},"@type":"response","@service":"naverservice.nmt.proxy","@version":"1.0.0"}}       
+
 다음과 같은 결과값이 출력된다.    
 
    
@@ -125,7 +128,7 @@ public class ApiExamTranslateNmt {
         System.out.println(responseBody);
 
 ```
-이는 main메서드에서 선언된 responseBody라는 String타입이 출력된 결과이고, <u>중첩포맷의 json</u> 형식이라는 것을 알 수 있다.      
+이는 위와같이 main메서드에서 선언된 responseBody라는 String타입이 출력된 결과이고, <u>중첩포맷의 json</u> 형식이라는 것을 알 수 있다.      
 
 json-simple이라는 Json데이터 처리용 라이브러리를 이용해 responseBody변수를 json데이터로 만들어 가공해본다.(json-simple사용을 위해 Maven설정에서 pom.xml의 dependency에 json-simple추가)         
 
