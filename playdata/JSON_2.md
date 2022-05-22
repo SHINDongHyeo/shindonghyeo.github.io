@@ -1,2 +1,89 @@
-내일부터 시작될 미니 프로젝트를 준비하며 프로젝트에 쓰일 만한 코드들을 작성해보았다. 그 중에서 아직 배우지 못한 데이터베이스 기술로 인해 데이터를 어떻게 저장하고 관리할 것인지 생각해보다가 JSON파일로 저장하면 쉽게 관리가 가능할 것 같다고 판단해 JSON파일을 이용한 코드 작성을 연습해보았다.
-# 1.
+내일부터 시작될 미니 프로젝트를 준비하며 프로젝트에 쓰일 만한 코드들을 작성해보았다. 그 중에서 아직 배우지 못한 데이터베이스 기술로 인해 데이터를 어떻게 저장하고 관리할 것인지 생각해보다가 JSON파일로 저장하면 쉽게 관리가 가능할 것 같다고 판단해 JSON파일을 이용한 코드 작성을 연습해보았다.        
+@ json-simple을 이용해서 실습했다.
+# JSON_2
+## 1) 생성자
+1. json객체 생성하기
+```java
+JSONObject 객체명 = new JSONObject();
+```
+
+2. json들이 들어있는 Array 생성하기
+```java
+JSONArray 객체명 = new JSONArray();
+```
+3. json 파싱 객체 생성하기
+```java
+JSONParser 파서 = new JSONParser();
+
+JSONObject 객체명 = (JSONObject)파서.parse(파싱하고자하는객체);
+```
+※ 여기서 파싱이란?        
+ : 어떤 문장의 구조를 파악하는 행위를 일컫는다. 즉, json이나 html 등의 원시 프로그램파일을 파서(파싱해주는 프로그램)에 입력으로 집어넣으면, 출력으로 구문을 해석할 수 있는 단위인 Object나 Array등이 나오게 된다.
+
+
+ ## 2) 메서드
+ 1. JSONObject 값 넣기
+ ```java
+ 객체명.put( key값 , value값 );
+ ```
+ 2. JSONObject에 찾고있는 key값 존재하는지 확인하기
+ ```java
+객체명.containsKey( key값 );
+ ```
+ 3. JSONObject에 찾고있는 value값 존재하는지 확인하기
+ ```java
+ 객체명.containsValue( value값 );
+ ```
+ 4. JSONObject 해당 key의 value값 반환하기
+ ```java
+ 객체명.get( key값 );
+ ```
+ 5. JSONObject Set타입으로 반환하기
+ ```java
+ 객체명.entrySet();
+ ```
+ 
+ 6. JSONObject String타입로 반환하기
+ ```java
+ 객체명.toJSONString();
+ ```
+ 7. JSONArray 값 넣기
+ ```java
+ 객체명.add( 데이터 );
+ ```
+ 
+
+
+## 3) String <--> JSON
+데이터베이스처럼 json을 사용하려 했기 때문에 json파일로 만들어 저장, 저장된 json파일을 읽어서 데이터 불러오기 등의 기능을 구현하기 위해 <u>json형식과 String타입을 오가는 방식</u>을 알아보았다.     
+1. String --> JSON    
+파일로 저장되어 있어 File을 통해 불러오면 String타입일 경우 다음과 같은 파싱을 통해 JSONObject로 바꿔줄 수 있다.  
+```java
+JSONParser parser = new JSONParser(); 
+try {
+    File file = new File("위치\\filename.json"); 
+    FileReader fileReader = new FileReader(file); 
+    Object obj = parser.parse(fileReader); 
+    JSONObject result = (JSONObject) obj;
+    fileReader.close(); // 오류를 피하기 위해 꼭 닫기
+    System.out.println(result);
+
+} catch (IOException | ParseException e) {
+    e.printStackTrace();
+}
+```
+
+2. JSON --> String     
+JSONObject를 파일로 저장하고 싶을 때는 toJSONString 메서드를 사용한다.
+```java
+JSONObject jsonObject = new JSONObject();
+try {  
+    File file = new File("위치\\filename.json");
+    FileWriter fileWriter = new FileWriter(file); // 파라미터에 true를 추가하면 덮어쓰기 기능 사용가능
+    fileWriter.write(jsonObject.toJSONString());
+    fileWriter.flush(); // 오류를 피하기 위해 꼭 비우기
+    fileWriter.close(); // 오류를 피하기 위해 꼭 닫기
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
