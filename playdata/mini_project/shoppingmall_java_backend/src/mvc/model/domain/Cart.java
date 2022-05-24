@@ -4,22 +4,21 @@ import java.util.ArrayList;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import mvc.exception.DataNotFoundException;
 
 @NoArgsConstructor
 @Getter
 public class Cart {
-	private ArrayList<Product> productList;
-	
-	public void addProduct(Product product) {
-		productList.add(product);
-	}
-	
-	public void deleteProduct(Product product) {
-		for(Product pd : productList) {
-			if(pd.getName().equals(product.getName())) {
-				pd = null;
-			}
-		}
-	}
+    private ArrayList<Product> productList;
+
+    public void addProduct(Product product) {
+        productList.add(product);
+    }
+
+    public void deleteProduct(Product product) {
+        for (Product pd : productList) {
+            if (pd.getName().equals(product.getName())) {
+                pd = null;
+            }
+        }
+    }
 }

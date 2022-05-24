@@ -17,7 +17,9 @@ public class Customer {
 	private String phoneNumber;
 	private String point;
 	
-	@Override
+	
+
+    @Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		

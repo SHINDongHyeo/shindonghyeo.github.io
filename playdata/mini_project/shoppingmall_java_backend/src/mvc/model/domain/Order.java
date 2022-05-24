@@ -21,7 +21,8 @@ public class Order {
 	private Customer customer;
 	private ArrayList<Product> productList;
 	
-	@Override
+	
+    @Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		

@@ -1,6 +1,6 @@
 package mvc.model.domain;
 
-import java.util.ArrayList;
+
 import java.util.Objects;
 
 import org.json.simple.JSONObject;
@@ -18,7 +18,9 @@ public class Product {
 	private String price;
 	private String stock;
 	
-	@Override
+	
+
+    @Override
 	public boolean equals(Object object) {
 		if(object == this) return true;
 		if(!(object instanceof Product)) {
@@ -76,4 +78,6 @@ public class Product {
 		
 		return jsonObject;
 	}
+
+   
 }
