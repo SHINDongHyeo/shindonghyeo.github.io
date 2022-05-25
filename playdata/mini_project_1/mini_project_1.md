@@ -102,11 +102,11 @@ toString메서드를 재정의 한 부분 밑에 toStringNumber라는 메서드�
 		return jsonObject;
 	}
 ```
-이번 프로젝트에서 productList, order, cart라는 ArrayList를 만들고 이를 활용해 작업을 수행했다고 언급했다. 이때 각 ArrayList에 요소로 Product나 Order같이 우리가 직접 만들어놓은 클래스타입을 받게 제네릭 설정해주었다. 그래서 ArrayList내 요소를 비교하는 원리를 가진 메서드들이 정확하게 작동되지 않았다.     
+이번 프로젝트에서 productList, order, cart라는 ArrayList를 만들고 이를 활용해 작업을 수행했다고 언급했다. 이때 각 ArrayList에 요소로 Product나 Order같이 우리가 직접 만들어놓은 클래스타입을 받게 제네릭 설정해주었다. <u>그래서 ArrayList내 요소를 비교하는 원리를 가진 메서드들(정확하게는 equals메서드를 이용하는 메서드들)이 정확하게 작동되지 않았다.</u>     
 
 ex) a=1, b=1에서 a와 b가 같은지를 확인하면 쉽게 같음을 알 수 있지만,     
 클래스A는 name,address라는 필드를 가지고 있고 a,b가 클래스A의 객체라면     
-a와 b가 같은 값을 가지고 있는지 비교하기 위해서는 a의 필드값과 b의 필드값이 같은지를 확인해야 한다. 하지만 일반적인 방법과 같이 a==b 같은 방법을 쓰면 a객체의 주소값과 b객체의 주소값을 비교하는 행위이므로 a와 b의 필드값이 같은지에 대해서는 판단할 수 없게 된다. 이 때문에 equals메서드를 사용해야 하지만 우리가 비교하려는 클래스의 구조를 반영해 equals메서드를 재정의해주어야 제대로 된 비교가 가능하다.       
+a와 b가 같은 값을 가지고 있는지 비교하기 위해서는 a의 필드값과 b의 필드값이 같은지를 확인해야 한다. 하지만 일반적인 방법과 같이 <u>a==b 같은 방법을 쓰면 a객체의 주소값과 b객체의 주소값을 비교하는 행위</u>이므로 a와 b의 필드값이 같은지에 대해서는 판단할 수 없게 된다. 이 때문에 equals메서드를 사용해야 하지만 이는 일반적인 Object를 받는다는 가정으로 작성되어있다. <u>그래서 우리가 비교하려는 클래스의 구조를 반영해 equals메서드를 재정의해주어야 제대로 된 비교가 가능하다.</u>       
 
 - equals메서드 재정의 방법    
 기본조건으로 참조값은 null이 아니다.
@@ -115,3 +115,51 @@ a와 b가 같은 값을 가지고 있는지 비교하기 위해서는 a의 필�
     - 추이성 : x.equals(y) 만족하고 y.equals(z)도 만족하면 x.equals(z)도 만족
     - 일관성 :  x.equals(y) 반복호출하면 항상 같은 결과 유지
     - x.equals(null)를 만족하지 않는다.
+
+(1)대칭성 불만족   
+참조값의 타입이 일치하지 않으면 대칭성에 문제가 생기게 된다.
+![equals대칭성](https://user-images.githubusercontent.com/96512568/170267497-fb9497b3-db72-43a5-94f4-6ffec22410d9.jpg)
+위 그림처럼 Object클래스 아래 A클래스와 String객체가 있다고 할 때 A클래스의 equals를 재정의한 후 A클래스객체와 String객체를 비교하면 A클래스객체.equals(String객체)에서의 equals는 재정의한 equals가 호출되고 String객체.equals(A클래스객체)에서의 equals는 재정의되지 않은 String클래스의 equals가 호출되므로 두 실행의 결과값이 같음을 보장하지 못하게 된다.
+## 2) Validate메서드
+
+```java
+// String null check
+	private static String validateString(String string) throws InvalidInputException {
+		if(string!=null) {
+			return string;
+		}
+		throw new InvalidInputException("유효하지 않은 입력입니다.");
+	}
+	
+	// 존재하는 product에 접근하는지 검증
+	private static Product validateProduct(String name) throws DataNotFoundException {
+		try {
+			productList = Model.readProductList();
+			for(Product product : productList) {
+				if(product.getName().equals(validateString(name))) {
+					return product;
+				}
+			}
+		}
+		catch(Exception e) {
+			EndView.printMsg(e.getMessage());
+		}
+		throw new DataNotFoundException("해당 상품은 없습니다.");
+	}
+	
+	// 존재하는 order에 접근하는지 검증
+	private static Order validateOrder(String phone) throws DataNotFoundException {
+		try {
+			for(Order order : getOrderList()) {
+				if(order.getCustomer().getPhoneNumber().equals(validateString(phone))) {
+					return order;
+				}
+			}
+		}
+		catch(InvalidInputException e) {
+			EndView.printMsg(e.getMessage());
+		}
+		throw new DataNotFoundException("해당 주문은 없습니다.");
+	}
+```
+Controller단에 validateString(),valdiateProduct(),validateOrder()를 작성했는데, validateString()의 경우 Object클래스 requireNonNull()과 같다. 내용은 같지만 메서드명의 통일성을 주기 위해서 validateString이란 메서드명을 이용했다. validateProduct메서드와 validateOrder메서드는 for문을 이용해 productList와 orderList를 훑으며 들어온 파라미터값이 존재하는지 확인하도록 작업했다.
