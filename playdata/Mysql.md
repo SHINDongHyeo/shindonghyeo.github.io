@@ -1,4 +1,5 @@
 # Mysql
+
 ## - 데이터베이스(DB)
 <u>데이터베이스(DB : Database)는 데이터를 체계화해 통합,관리하는 데이터 집합체를 의미한다.</u> 즉, 효율적인 사용을 위해 처리된 데이터를 데이터베이스라고 생각할 수 있다. 이런 데이터베이스를 관리하는 프로그램을 데이터베이스 관리 시스템(DBMS : Database Management System)이라고 한다. 이런 DBMS 종류 중 지배적인 형태가 관계형 데이터베이스 관리 시스템(RDBMS : Relational Database Management System)이다. <u>RDBMS의 가장 큰 특징은 테이블이라는 구조를 이용해 데이터를 저장한다는 점이다.</u> 이런 RDBMS의 종류로는 Oracle, MySQL, MS-SQL, Maria DB 등이 있다.
 
@@ -8,6 +9,7 @@ RDBMS의 가장 큰 특징으로 키(key)와 값(value)의 관계를 나타낸 �
 - 행(row) : 튜플(tuple)이나 레코드(record)라고도 불리며 테이블에서 가로 한줄을 의미한다.
 - 키(key) : 기본 키(primary key)라고도 불리며 테이블에서 행의 식별자로 이용되는 열을 의미한다.
 - 값(value) : 테이블에서 각각의 행과 열에 입력된 데이터를 의미한다.
+
 ## - SQL
 Structured Query Language의 약어로 RDBMS를 이용하기 위해 제작된 언어이다. 다음과 같이 3가지로 분류할 수 있다.       
 - DDL : Data Definition Language     
@@ -28,6 +30,7 @@ Structured Query Language의 약어로 RDBMS를 이용하기 위해 제작된 �
     - revoke
     - commit
     - rollback
+
 
 ## - 데이터 정의 언어(DDL) 
 테이블이나 인덱스같은 전체 구조를 조작하는 언어로, 기본적으로 바로 commit이 되는 성질이 있어서 rollback기능이 적용되지 않는다.
@@ -136,6 +139,7 @@ delete from 테이블명 where 조건;
 : 데이터베이스 속 영구메모리에 저장
 - rollback    
 : 데이터베이스 속 임시메모리에 있는 내용 없에고 영구메모리에 있는 내용 불러옴
+
 ## - 키(key)
 키는 테이블에서 <u>레코드들(행들)을 서로 구분할 수 있게 하는 하나 이상의 속성들(열들)의 집합</u>을 의미한다. 쉬운 예로 주민등록번호같은 경우 개개인이 고유한 값을 가지고 있어 주민등록번호가 개개인을 구분할 수 있게하는 키(key)라고 할 수 있다.
 - 후보 키(candidate key) : 기본 키가 될 수 있는 후보
