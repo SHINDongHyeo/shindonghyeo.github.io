@@ -8,7 +8,134 @@ RDBMS의 가장 큰 특징으로 키(key)와 값(value)의 관계를 나타낸 �
 - 행(row) : 튜플(tuple)이나 레코드(record)라고도 불리며 테이블에서 가로 한줄을 의미한다.
 - 키(key) : 기본 키(primary key)라고도 불리며 테이블에서 행의 식별자로 이용되는 열을 의미한다.
 - 값(value) : 테이블에서 각각의 행과 열에 입력된 데이터를 의미한다.
+## - SQL
+Structured Query Language의 약어로 RDBMS를 이용하기 위해 제작된 언어이다. 다음과 같이 3가지로 분류할 수 있다.       
+- DDL : Data Definition Language     
+-> <u>골격 조작 용도</u>
+    - create
+    - alter
+    - drop
+    - truncate
+- DML : Data Manipulation Language      
+-> <u>내용 조작 용도</u>
+    - select
+    - insert
+    - update
+    - delete
+- DCL : Data Control Language      
+-> <u>권한 조작, 저장 조작 용도</u>
+    - grant
+    - revoke
+    - commit
+    - rollback
 
+## - 데이터 정의 언어(DDL) 
+테이블이나 인덱스같은 전체 구조를 조작하는 언어로, 기본적으로 바로 commit이 되는 성질이 있어서 rollback기능이 적용되지 않는다.
+- create  
+: 데이터베이스 개체(테이블,인덱스,제약조건 등) 생성   
+```
+예시
+1.
+create table 테이블명(
+    필드명 필트타입 제약조건
+);
+
+2.
+create table 테이블명 as select 복제할다른테이블컬럼명 from 다른테이블명 where 조건;
+--> 다른테이블에서 조건에 맞는 복제할다른테이블컬럼의 레코드를 복제한다     
+여기서 조건에 false값을 넣어주면 다른테이블의 구조만 복제된다.
+```
+- drop        
+: 데이터베이스 개체 삭제 
+    - 추가 제어
+    - if exists : 기본적으로 drop은 삭제하려는 개체가 없으면 오류가 생긴다. 이를 방지하기 위해 개체가 존재하면 삭제하고 없으면 넘어가라는 명령어 if exists를 사용할 수 있다.
+```
+예시
+1.
+drop table if exists 테이블명;
+```
+- alter       
+: 데이터베이스 개체 수정
+    - 추가 제어
+    - add : 새로운 컬럼이나 제한 추가
+    - modify : 기존에 존재하던 컬럼이나 제한 수정
+    - drop : 기존에 존재하던 컬림이나 제한 삭제
+```
+예시
+1.
+alter table 테이블명 add 새로운컬럼명 새로운컬럼타입;
+
+2.
+alter table 테이블명 modify 기존컬럼명 새로운컬럼타입;
+
+3.
+alter table 테이블명 drop 기존컬럼명;
+```
+- truncate        
+: 테이블 구조는 유지하고 데이터만 삭제(delete와 달리 rollback 못 씀)
+```
+예시
+1.
+truncate table 테이블명;
+```
+    
+
+## - 데이터 제어 언어(DML)
+데이터베이스에 들어가는 데이터 자체를 관리하는 언어로, 별도의 auto-commit설정이 되어있지 않는한 바로 commit되지는 않아서 commit전으로 돌아가는 rollback기능을 사용해 되돌릴 수 있는 작업들이다.
+- select      
+: 데이터 검색
+```
+예시
+1.
+select 필드명 as 표실할필드명 from 테이블명 where 조건 order by asc(오름차순,내림차순:asc,desc);
+
+2.
+select distinct 필드명 from 테이블명;
+--> 필드에서 중복된 값은 제거하고 검색
+
+3.
+select 필드명 from 테이블명 where 검색할필드명 between 검색시작범위 and 검색끝범위;
+
+4.
+select ifnull(필드명, 값이 null일 경우 대체값) from 테이블명;
+
+5.
+select 필드명 from 테이블명 where 비교할필드명 in(비교값1, 비교값2, ...);
+--> 비교할필드명에 해당하는 값이 비교값1, 비교값2,... 에 포함되면 해당 레코드의 필드명 값 검색
+
+6.
+select
+	case
+		when 조건1 then 작업1
+		when 조건2 then 작업2
+		else 작업3
+	end as 필드명별칭
+from 테이블명;
+--> 필드명별칭으로 표시하고 검색내용으로는 조건1을 만족하면 작업1실행, 조건2만족하면 작업2실행, 아무것도 만족하지 않으면 작업3실행하여 검색완료 
+```
+- insert      
+: 데이터 삽입
+- update     
+: 데이터 수정
+- delete     
+: 데이터 삭제
+```
+예시
+1.
+delete from 테이블명 where 조건;
+--> alter drop과 다른점 : alter drop은 특정 필드를 선택 그 필드 자체를 삭제함. delete는 where 조건을 통해조건을 만족하는 레코드들(행)만 삭제한다.
+```
+
+## - 데이터 조작 언어(DCL) 
+권한 조작, 작업 저장 조작
+- grant    
+: 
+- revoke    
+: 
+- commit    
+: 데이터베이스 속 영구메모리에 저장
+- rollback    
+: 데이터베이스 속 임시메모리에 있는 내용 없에고 영구메모리에 있는 내용 불러옴
 ## - 키(key)
 키는 테이블에서 <u>레코드들(행들)을 서로 구분할 수 있게 하는 하나 이상의 속성들(열들)의 집합</u>을 의미한다. 쉬운 예로 주민등록번호같은 경우 개개인이 고유한 값을 가지고 있어 주민등록번호가 개개인을 구분할 수 있게하는 키(key)라고 할 수 있다.
 - 후보 키(candidate key) : 기본 키가 될 수 있는 후보
@@ -53,96 +180,150 @@ RDBMS의 가장 큰 특징으로 키(key)와 값(value)의 관계를 나타낸 �
 - 외래 키(foreign key) : 하나의 테이블에서 참조하는 다른 테이블의 기본 키
     - 주민등록번호를 기본 키로 사용하는 테이블을 다른 테이블에서 참조하여 주민등록번호를 가져다 쓸 경우 이 속성을 외래 키라고 한다. 이때 참조 무결성을 지켜야 하므로 주민등록번호를 기본 키로 사용하던 테이블에 없던 주민등록번호 값을 참조할 순 없다. 오직 기본 키로 사용하던 테이블에 존재하는 값만을 참조할 수 있다.
 
-## - SQL
-Structured Query Language의 약어로 RDBMS를 이용하기 위해 제작된 언어이다. 다음과 같이 3가지로 분류할 수 있다.       
-- DDL : Data Definition Language     
--> <u>골격 조작 용도</u>
-    - create
-    - alter
-    - drop
-    - truncate
-- DML : Data Manipulation Language      
--> <u>내용 조작 용도</u>
-    - select
-    - insert
-    - update
-    - delete
-- DCL : Data Control Language      
--> <u>권한 조작, 저장 조작 용도</u>
-    - grant
-    - revoke
-    - commit
-    - rollback
 
 
+## - 조인(join)
+두 개 이상의 테이블을 겹쳐서 서로의 교집합, 합집합 부분 등을 사용하는 방법이다. 각각의 조인을 설명하기 위해 예시 테이블을 2개 만들어본다.     
 
+<A테이블> (A테이블의 번호는 B테이블의 번호를 참조한 외래 키다.)    
+번호 이름 재능       
+&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;홍길동   춤      
+&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;이장군   노래      
+&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;김미소   null      
 
-RDBMS(관계형 데이터베이스) 사용 언어로 table 구조를 가지고 table은 컬럼(속성)과 로우(레코드)로 구성되어 있다.
+<B테이블>       
+번호 지역    
+&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp; 한국    
+&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp; 미국  
+&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp; 중국     
+&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp; null      
 
-## 명령어
-- database 명령어
-    - show databases;   
-    : 데이터베이스 목록 출력
-    - create database 데이터베이스명;   
-    : 데이터베이스 생성
-- table 명령어
-    - show table;   
-    : 테이블 목록 출력  
-    - create table 테이블명();  
-    : 테이블 생성   
-        - CONSTRAINT pk_테이블명 PRIMARY KEY ( 테이블속성 )     
-        : 해당 테이블의 테이블속성이 중복되지 않는 존재로 설정
-    - drop table 테이블명;  
-    : 테이블 삭제   
-    
-- CRUD 명령어(insert/select/update/delete)
-    - create database 데이터베이스명;   
-    : 데이터베이스 생성
-    - use 데이터베이스명;   
-    : 데이터베이스 사용
+- Equi Join      
+: '='연산자를 이용해 테이블에서 같은 조건을 가지고 있는 값을 출력하기 위해 사용한다.
+```
+select * from A as a,B as b where a.번호=b.번호;
+-->
+(번호,이름,춤,번호,지역 순으로) 
+1, 홍길동, 춤, 1, 한국
+2, 이장군, 노래, 2, 미국
+3, 김미소, null, 3, 중국  
+출력됨
+```
+- Non-Equi Join     
+: '='연산자가 아닌 beteween and, >,<,>=,<= 등의 연산자를 사용해 해당 조건을 만족하는 값을 출력하기 위해 사용한다.
+```
+select * from A where A.번호 between 1 and 2;
+--> A에서 번호가 1과 2사이에 있는
+(번호,이름,춤,번호,지역 순으로) 
+1, 홍길동, 춤, 1, 한국
+2, 이장군, 노래, 2, 미국
+출력됨
+```
+- Self Join      
+: 자신의 테이블을 참조해야 할 경우가 있다. 예를 들어 한 테이블에 모든 사원의 번호가 있고 각 사원의 번호가 있는 행에는 그들의 상사번호가 있다고 가정해본다. 이때 사원의 상사가 누구인지 알고 싶다면 상사번호를 알아내어 이 번호를 다시 테이블에서 사원번호로 검색해야 한다. 이번 경우에는 위에서 예시로 만든 A,B테이블 대신 다른 테이블을 예시로 들겠다.      
+ex)      
+<employee테이블>         
+번호 이름 상사번호     
+&nbsp;1&nbsp;&nbsp;&nbsp;김철수&nbsp;&nbsp;&nbsp;2       
+&nbsp;2&nbsp;&nbsp;&nbsp;이영미&nbsp;&nbsp;&nbsp;3     
+&nbsp;3&nbsp;&nbsp;&nbsp;박희민&nbsp;&nbsp;&nbsp;4     
+&nbsp;4&nbsp;&nbsp;&nbsp;최지영&nbsp;&nbsp;&nbsp;null     
 
-이후 데이터를 생성하는 명령어도 있지만 먼저 데이터를 검색하는 기능부터 알아봄.
-
-## 3. 검색
-- select 테이블속성 as 표시할이름 from 테이블명;    
-: 해당 테이블 속 테이블속성을 표시할이름으로 검색해 출력    
-- select distinct 테이블속성 from 테이블명;     
-: 해당 테이블 속 테이블속성에서 중복내용 제외하여 검색해 출력   
-- select 테이블속성 from 테이블명 order by asc/desc;    
-: 해당 테이블 속 테이블속성을 오름차순/내림차순으로 검색해 출력
-- select 테이블속성 from 테이블명 where ( );    
-: 해당 테이블 속 테이블속성에서 where 뒤 조건문을 만족하는 경우 검색해 출력     
-    - 조건문에 들어갈 수 있는 내용  
-        - null이나 int값을 비교할 때    
-        : 테이블속성 is null/1/2/10 ... 
-        - 문자열을 비교할 때    
-        : 테이블속성 = "비교할 문자열"  
-        - 범위를 지정할 때  
-        : between 시작범위 and 끝범위
-        - null체크  
-        : IFNULL(테이블속성, null일경우출력할값)    
-        - 대소문자 비교하기 위한 설정   
-        : Binary("비교할 문자열")   
-        - or 대신 쓸 수 있는 구조   
-        : 테이블속성 in (비교할값1,비교할값2..)
-
-- 오라클과 달리 from없이 원하는 값을 검색해줄 수 있다.
-    - select 2+3;    
-    : 5 출력
-    - abs(),round(),truncate(),mod() 등의 함수를 사용할 수 있다.
-    - 몇가지 유용한 함수
-    - case,when,end 함수     
+    - 이중 호출      
+    : 간단하게 두 번 호출하여 문제를 해결할 수 있다.
     ```
-    select 테이블속성,
-	case
-		when 조건1 then 작업1
-		when 조건2 then 작업2
-		when 조건3 then 작업3
-		when 조건4 then 작업4
-		else 테이블속성
-	end as 테이블속성별칭
-    from 테이블;
+    select e1.이름 부하이름, e2.이름 상사이름
+    from employee e1,employee e2
+    where e1.상사번호=e2.번호;
+    -->
+    (부하이름 상사이름)
+    김철수 이영미
+    이영미 박희민
+    박희민 최지영
+    이렇게 3개의 데이터 출력된다.
     ```
+
+    - Sub Querry      
+    : 쿼리문을 중첩시키는 방법이다. 이런 서브 쿼리문으로 원하는 값을 특정해서 뽑아낼 수 있다.
+    ```
+    select 이름
+    from employee
+    where 번호=(select 상사번호 from employee where 번호=1);
+    --> 서브 쿼리문부터 실행이 된다. 즉, 번호가 1인 레코드에서 상사번호를 검색해온다. 이는 번호:1,이름:김철수,상사번호:2인 레코드에서 상사번호 2를 검색해온다는 뜻이고 이 값이 where절로 대입되어 번호가 2인 레코드에서 이름을 검색하게 된다. 즉, 번호:2,이름:이영미,상사번호:3인 레코드에서 이름인 이영미를 뽑아오게 된다.
+    출력: 이영미
+    ```
+
+- Inner Join ... on A.key=B.key    
+: 가장 기본적인 조인으로 두 테이블의 <u>교집합 부분을 이용</u>한다고 생각하면 된다.     
+```
+select * from A inner join B on A.번호=B.번호;
+
+--> A테이블의 번호와 B테이블의 번호가 같으면 선택해라.    
+(번호,이름,춤,번호,지역 순으로)     
+1, 홍길동, 춤, 1, 한국
+2, 이장군, 노래, 2, 미국
+3, 김미소, null, 3, 중국     
+이렇게 3개의 데이터가 출력된다.
+```
+- (Left Join / Right Join) ... on A.key=B.key      
+: left와 right 조인은 방향만 다르고 작업을 동일하다. left의 경우 left join 기준 왼쪽, right의 경우 right join 기준 오른쪽의 테이블을 기준테이블로 삼는다. 기준테이블이란 on에서 제시된 조건을 충족하지 않더라도 값을 출력하는 테이블을 의미한다. 예시를 통해 알아보자.
+```
+select * from A right join B on A.번호=B.번호;
+--> B가 기준테이블로 on에 제시된 조건을 충족하지 않더라도 값을 출력할 것임. 먼저 on 조건을 충족하는 값들은
+(번호,이름,춤,번호,지역 순으로)  
+1, 홍길동, 춤, 1, 한국
+2, 이장군, 노래, 2, 미국
+3, 김미소, null, 3, 중국 
+이렇게 3개의 데이터가 있다. 하지만 B테이블에서 번호4에 대한 데이터가 있기 때문에 아무리 A테이블에 번호4와 매치되는 데이터가 없다고 해도 right join에 대한 기준을 B테이블로 잡았으므로 번호4에 대한 데이터도 출력된다.     
+(번호,이름,춤,번호,지역 순으로) 
+1, 홍길동, 춤, 1, 한국
+2, 이장군, 노래, 2, 미국
+3, 김미소, null, 3, 중국
+null,null,null,4,null
+이렇게 4개의 데이터가 출력된다.
+```
+- (Left Join / Right Join) ... on A.key=B.key where (A/B).key is null     
+: 위 경우와 비슷하지만 뒤에 where절을 이용해 기준테이블과 다른테이블이 null일 경우를 제외시켜 자신만 가지고 있는 값을 출력한다. 쉽게 말하면 다른 테이블과 겹친 부분을 빼고 출력하겠다는 의미다.
+```
+select * from A right join B on A.번호=B.번호 where A.번호 is null;
+--> 위에 있는 예시의 출력값에서 where절만 적용해 주면 된다.
+(번호,이름,춤,번호,지역 순으로) 
+1, 홍길동, 춤, 1, 한국
+2, 이장군, 노래, 2, 미국
+3, 김미소, null, 3, 중국
+null,null,null,4,null
+이렇게 4개가 출력된 상황에서 where A.번호 is null을 만족하는 경우는
+null,null,null,4,null
+이렇게 데이터 하나만 출력된다.
+```
+- Left/Right Outer Join ... on A.key=B.key      
+: outer는 사실 생략이 가능하다. 즉 생략을 하고보면 위에서 설명한 예시와 다를 것이 없다. full outer의 경우는 A와 B의 합집합을 의미하지만 mysql에서는 지원되지 않아서 outer 기능이 크게 쓰이지 않는다.
+- Left/Right Outer Join ... on A.key=B.key    
+where A.key is null or B.key is null    
+: A와 B테이블에서 on조건을 만족하는 부분만 뺀 나머지 데이터 검색
+
+***
+***
+***
+***
+***
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 4. 그룹함수
 그룹함수란 다수의 행데이터를 한번에 처리하는 함수를 의미한다. null값은 자동 제거해주며 기능한다.
 - select count(테이블속성) from 테이블명;    
