@@ -12,8 +12,8 @@ main:
   - title: "Tags"
     url: /tags/
 
-  - title: "About"
-    url: https://mmistakes.github.io/minimal-mistakes/about/
+  # - title: "About"
+  #   url: https://mmistakes.github.io/minimal-mistakes/about/
 
   - title: "Sample Posts"
     url: /year-archive/
