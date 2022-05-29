@@ -5,16 +5,21 @@ main:
 
   - title: "Introduce"
     url: /about/
+
   - title: "Category"
     url: "/categories/"
+
   - title: "Tags"
     url: /tags/
-    
+
   - title: "About"
     url: https://mmistakes.github.io/minimal-mistakes/about/
+
   - title: "Sample Posts"
     url: /year-archive/
+
   - title: "Sample Collections"
     url: /collection-archive/
+    
   - title: "Sitemap"
     url: /sitemap/
