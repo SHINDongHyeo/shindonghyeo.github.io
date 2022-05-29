@@ -23,3 +23,15 @@ main:
 
   - title: "Sitemap"
     url: /sitemap/
+
+main-sidebar:
+  - title: "프로그래밍언어"
+    url: "/programminglanguage/"
+    children:
+    - title: "JAVA"
+      url: "/programminglanguage/java/"
+    - title: "PYTHON"
+      url: "/programminglanguage/python/"
+  - title : "Git"
+    url: "/git/"
+    
