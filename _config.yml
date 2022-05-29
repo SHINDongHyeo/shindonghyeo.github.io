@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 
 # Site Settings
 locale                   : "ko-KR"
-title                    : "신동혁Gitpages"
+title                    : "신동혁 Gitpages"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "신동혁"
@@ -104,7 +104,7 @@ analytics:
 
 # Site Author
 author:
-  name             : "Dong Hyeok"
+  name             : "신동혁"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "소프트웨어 개발자로 가는 기록일지"
   location         : "Republic of Korea"
