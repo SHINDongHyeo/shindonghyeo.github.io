@@ -25,7 +25,7 @@
       </li>
 
       <li>
-        <span class="nav__sub-title">알고리즘,자료구조</span>
+        <span class="nav__sub-title">알고리즘/자료구조</span>
         
         <ul>
                 {% for category in site.categories %}
