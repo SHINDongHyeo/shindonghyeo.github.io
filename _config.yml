@@ -19,11 +19,19 @@ locale                   : "ko-KO"
 title                    : "신동혁 Gitpage"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
+<<<<<<< HEAD
 name                     : "신동혁"
 description              : "소프트웨어 개발자로 가는 과정을 기록한다"
 url                      : "https://shindonghyeo.github.io/"
 baseurl                  : #
 repository               : "https://github.com/SHINDongHyeo/shindonghyeo.github.io"
+=======
+name                     : "Your Name"
+description              : "An amazing website."
+url                      : "https://shindonghyeo.github.io"
+baseurl                  : # the subpath of your site, e.g. "/blog"
+repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+>>>>>>> e3e039a45c1618d950af7d5421131c63f39badf5
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : "메인타이틀"
