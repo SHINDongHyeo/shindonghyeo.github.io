@@ -1,3 +1,9 @@
+---
+author_profile: true
+sidebar:
+  nav: "main-sidebar"
+categories: "java"
+---
 # 1. 유용한 코드 작성 단축키 정리
 ctrl + space : 자동완성 기능과 비슷하다.    
 ctrl + shift + f : 자동 들여쓰기    

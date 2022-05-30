@@ -1,3 +1,9 @@
+---
+author_profile: true
+sidebar:
+  nav: "main-sidebar"
+categories: "java"
+---
 # 1. Exception
 흔히 에러라고 볼 수도 있지만 진짜 Error와는 다른 표시다. <u>Error는 심한 오류로 프로그램 자체가 실행될 수 없을 때 나오는 경고표시고, Exception은 그에 비해 간단한 에러를 의미한다.</u>
 ## 1) 자바에서 특징
