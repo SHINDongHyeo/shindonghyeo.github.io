@@ -44,6 +44,26 @@
 
     </li>
 
+    <li>
+        <span class="nav__sub-title">코딩테스트문제풀이</span>
+        
+        <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "baekjoon" %}
+                        <li><a href="/categories/baekjoon" class="">백준({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+        </ul>
+         <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "programmers" %}
+                        <li><a href="/categories/programmers" class="">프로그래머스({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+        </ul>
+
+    </li>
+
 
       <li>
         <span class="nav__sub-title">etc</span>
@@ -51,7 +71,7 @@
         <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "etc" %}
-                        <li><a href="/categories/etc" class="">git({{category[1].size}})</a></li>
+                        <li><a href="/categories/etc" class="">etc({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
         </ul>
