@@ -1,7 +1,7 @@
 ---
 title: "자바"
 layout: archive
-permalink: java
+permalink: categories/java
 author_profile: true
 sidebar_main: true
 ---
