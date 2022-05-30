@@ -1,7 +1,6 @@
 ---
 author_profile: true
-sidebar:
-  nav: "main-sidebar"
+
 categories: "java"
 ---
 # 1. 유용한 코드 작성 단축키 정리
