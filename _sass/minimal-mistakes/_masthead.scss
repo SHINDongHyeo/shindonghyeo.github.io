@@ -13,7 +13,7 @@
 
   &__inner-wrap {
     @include clearfix;
-    margin-left: auto;
+    margin-left: 0;
     margin-right: auto;
     padding: 1em;
     max-width: 100%;
