@@ -1,6 +1,6 @@
 ---
 author_profile: true
-categories: "java","etc"
+categories: "design_patter"
 toc: true
 toc_sticky: true
 ---
