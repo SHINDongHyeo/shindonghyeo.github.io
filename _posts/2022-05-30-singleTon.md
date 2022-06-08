@@ -5,7 +5,7 @@ toc: true
 toc_sticky: true
 ---
 
-# 1. SingleTon
+# 1. 싱글톤 패턴( SingleTon Pattern ) 
 객체생성에 제한을 걸기 위한 방법이다.  
 
 ## 1.1 Eager Initialization(Early Loading) (가장 기본적 singleTon패턴)
