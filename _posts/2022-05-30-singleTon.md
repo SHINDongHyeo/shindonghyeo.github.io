@@ -1,6 +1,6 @@
 ---
 author_profile: true
-categories: "design_patter"
+categories: "design_pattern"
 toc: true
 toc_sticky: true
 ---
