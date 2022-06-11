@@ -97,8 +97,8 @@
         
         <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "미니프로젝트" %}
-                        <li><a href="/categories/mini_project" class="">백준({{category[1].size}})</a></li>
+                    {% if category[0] == "mini_project" %}
+                        <li><a href="/categories/mini_project" class="">미니프로젝트({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
         </ul>
