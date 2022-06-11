@@ -92,6 +92,20 @@
     </li>
 
 
+    <li>
+        <span class="nav__sub-title">프로젝트</span>
+        
+        <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "미니프로젝트" %}
+                        <li><a href="/categories/mini_project" class="">백준({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+        </ul>
+
+    </li>
+
+
       <li>
         <span class="nav__sub-title">etc</span>
         
