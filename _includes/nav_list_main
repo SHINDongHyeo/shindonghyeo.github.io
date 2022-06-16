@@ -41,6 +41,13 @@
                     {% endif %}
                 {% endfor %}
         </ul>
+        <ul>
+            {% for category in site.categories %}
+                {% if category[0] == "db" %}
+                    <li><a href="/categories/db" class="">DB상식({{category[1].size}})</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
 
     </li>
 
