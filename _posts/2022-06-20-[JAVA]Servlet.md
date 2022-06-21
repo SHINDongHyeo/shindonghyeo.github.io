@@ -17,3 +17,21 @@ http프로토콜의 request정보를 서블릿에게 전달하기 위한 목적�
 
 - HttpServletResponse : 
 WAS는 어떤 클라이언트가 요청을 보냈는지 알고 있고, 해당 클라이언트에게 응답을 보내기 위한 HttpServleResponse 객체를 생성하여 서블릿에게 전달하고 이 객체를 활용하여 content type, 응답 코드, 응답 메시지 등을 전송합니다.
+
+# 3.Forward / Redirect
+Servlet을 통해 페이지를 이동하는 방식은 두 가지 존재한다. Forward와 Redirect다.            
+
+- Forward : request, response를 유지하며 페이지 이동        
+
+```java
+request.getRequestDispatcher("이동할페이지주소").forward(request값, response값);
+```
+
+- Redirect : request, resoponse가 새롭게 생성되며 페이지 이동     
+
+```java
+response.sendRedirect("이동할페이지주소");
+```
+
+
+즉, forward는 유저가 요청한 첫 url이 유지되며 페이지가 바뀌는 방식이고, redirect는 유저가 요청한 첫 url에서 새롭게 두번째 url이 요청되며 페이지가 바뀌는 방식이다. forward방식은 url이 바뀌지 않으므로 보안이 필요할 경우 주로 사용되는 방식이다.
