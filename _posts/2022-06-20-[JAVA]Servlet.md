@@ -23,13 +23,13 @@ WAS는 어떤 클라이언트가 요청을 보냈는지 알고 있고, 해당 �
 # 3.Forward / Redirect
 Servlet을 통해 페이지를 이동하는 방식은 두 가지 존재한다. Forward와 Redirect다.            
 
-- Forward : request, response를 유지하며 페이지 이동        
+- Forward : request, response를 유지하며 페이지 이동(클라이언트 측에서 호출)       
 
 ```java
 request.getRequestDispatcher("이동할페이지주소").forward(request값, response값);
 ```
 
-- Redirect : request, resoponse가 새롭게 생성되며 페이지 이동     
+- Redirect : request, resoponse가 새롭게 생성되며 페이지 이동(서버 내부에서 호출)     
 
 ```java
 response.sendRedirect("이동할페이지주소");
