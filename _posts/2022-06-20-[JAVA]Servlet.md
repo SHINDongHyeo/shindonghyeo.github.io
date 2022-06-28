@@ -60,3 +60,7 @@ response.sendRedirect("이동할페이지주소");
 
 #### 줄 바꿈
 servlet에서 줄바꿈 = <br>을 같이 프린트해줘야 브라우저에서 줄 바뀜
+
+#### servlet에서 parameter와 attribute의 차이
+- parameter :  get 가능		String반환 		즉, client가 브라우저에 입력한 정보를 의미
+- attribute :  set,get 가능		Object반환		즉, servlet(server)에서 만들어진 정보를 의미
