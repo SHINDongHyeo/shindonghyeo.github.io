@@ -74,14 +74,14 @@ Eager Initialization와 달리 생성자를 getInstance메서드 안으로 넣�
 
 ```java
 public class SingleTon {
-	private static volatile SingleTon instance = new SingleTon();
+	private static volatile SingleTon instance;
 	private SingleTon() {}
 	
 	public static SingleTon getInstance() {
 		if (instance == null){ //-----------------> 첫번째 체크
 			synchronized (SingleTon.class) {
 				if (instance == null){ //-----------------> 두번째 체크
-					instance = new.SingleTon();
+					instance = new SingleTon();
 				}
 			}
 		}
@@ -114,12 +114,10 @@ public class SingleTon {
 문제점 : **클라이언트가 임의로 singleTon파괴가 가능한 구조다. 리플렉션   직렬화+역직렬화**
 
 #### 1.3.2.1 Refelction
-
-아직 공부 안 함
+리플렉션(Reflection)은 자바 API의 한 종류로 클래스 타입을 모르는 상황에 클래스 타입을 알아내거나, 메서드, 변수 등을 만들거나 수정할 수 있다. 즉, private설정을 통해 singleTon이 유지될 때 private설정을 바꿈으로 singleTon패턴이 깨질 수 있다.
 
 #### 1.3.2.2 직렬화+역직렬화
-
-아직 공부 안 함
+직렬화(Serialization)란 객체들의 데이터를 연속적인 흐름의 형태로 만드는 것이고, 역직렬화(Deserialization)란 직렬화의 반대로 데이터의 연속적인 흐름의 형태를 다시 데이터를 가지고 있는 객체형태로 만드는 것이다. 이렇게 역직렬화하는 과정에서 객체를 만드는 부분있는데, singleTon객체라도 객체가 생성되게 된다. 하지만 이때 readResolve()메서드를 통해 역직렬화하는 과정에서 객체생성을 막고 이미 생성된 객체를 받아가게 하여 singleTon을 유지시킬 수 있다.
 
 ### 1.3.3 Enum
 Enum은 lazy initializaion의 문제점인 스레드 세이프하지 않음을 해결하지만, lazy loading을 할 수 없어 lazy initialization의 장점은 살리지 못했다. 하지만 스레드 세이프함 외에도 직렬화/역직렬화에 대한 문제점을 해결하여 안전한 패턴이다.
