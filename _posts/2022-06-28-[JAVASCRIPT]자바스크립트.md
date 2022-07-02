@@ -147,26 +147,68 @@ list.forEach(function(s){
 
 
 ## 2.4 객체
+### 2.4.1 객체 생성
 자바스크립트의 객체는 json객체나 맵, 딕셔너리 구조와 흡사하다. **객체를 생성하는 방법**으로 2가지가 있다. 첫번째로 객체를 중괄호('{ }')로 묶고 객체 안에서 변수는 마치 key처럼 선언하고 변수값은 value처럼 선언해 콜론(':')으로 두 값을 연결하고 쉼표(',')로 연속해 변수를 선언 및 초기화하는 **객체 리터럴 방식**이 있고(자바 클래스 만드는 형식과 흡사하게 보임), 먼저 객체 생성자를 통해 객체를 생성하고 닷('.')과 등호('=')를 이용해 객체 안 변수값을 설정하는 방식이 있다. 다음 예시를 통해 알아본다.         
 
 - 객체 리터럴 방식
 
 ```javascript
-let obj1 = { // 객체 시작
-            name: "연아", // name변수선언
-            age: 20, // age변수선언
-            color: function(){ // color변수선언(변수값으로 함수도 넣을 수 있다)
-                return this.name+' 선호하는 색은 red';
-            }
-        }; // 객체 끝
+let obj1 = {                   // 객체 시작
+            name: "동석",     // name변수선언
+            age: 40          // age변수선언
+        };                  // 객체 끝
+
+let obj2 = {                                    // 객체 시작
+        name: "연아",                           // name변수선언
+        age: 20,                                // age변수선언
+        color: function(){                      // color변수선언(변수값으로 함수도 넣을 수 있다)
+            return this.name+' 선호하는 색은 red';
+        },
+        insideObj1: obj1                        // insideObj1변수선언(변수값으로 객체(위에서 미리 만들어 놓은)도 넣을 수 있다)
+        
+    };                                          // 객체 끝
 ```
 
 
 - 객체 생성자 이용 방식
 
 ```javascript
-let obj2 = new 
+// 위와 같은 객체 생성 구조므로, 주석은 생략한다.
+let obj1 = new Object();
+obj1.name ="동석";
+obj1.age = 40;
+
+let obj2 = new Object();
+obj2.name = "연아";
+obj2.age = 20;
+obj2.color = function(){ 
+                return this.name+' 선호하는 색은 red';
+};
+obj2.insideObj1 = obj1;
 ```
+
+
+### 2.4.2 객체 호출
+정확히 객체의 변수를 호출하는 방법이다. 닷('.')을 이용해 호출한다. 위 '2.4.1 객체 생성'단계에서 생성한 obj1, obj2 객체를 이용해 예시를 든다.
+
+```javascript
+// 하단 사진으로 출력물 확인
+console.log(1,obj1);
+console.log(2,obj2);
+console.log(3,obj1.name);
+console.log(4,obj2.name);
+console.log(5,obj2.color());
+console.log(6,obj2.insideObj1);
+console.log(7,obj2.insideObj1.age);
+```
+
+<img width="379" alt="자바스크립트객체" src="https://user-images.githubusercontent.com/96512568/176983903-81aebefa-869f-42bf-8ee6-b0cbf14ccaa3.png">
+
+
+### 2.4.3 자바스크립트 객체와 JSON 객체
+자바스크립트 객체는 JSON객체와 흡사하다고 언급했었다. 그 이유는 JSON(JavaScript Object Notation)이란 자바스크립트 객체를 외부에 전송하기 위해 더 간단한 형태로 바꾼(직렬화 과정) 것이 바로 JSON이기 때문이다.
+
+
 
 
 # 3.Javascript 특성
