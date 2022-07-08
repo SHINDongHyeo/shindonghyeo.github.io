@@ -85,8 +85,8 @@ Configure Namespaces에서 'aop, beans, context'체크박스를 체크해서 사
 <!-- 어노테이션 기능 사용하겠다 -->
 <context:annotation-config/>
 
-<!-- 어노테이션 기능을 위해 해당 주소를 스캔해 component를 찾겠다 -->
-<context:component-scan base-package="주소"/>
+<!-- 어노테이션 기능을 위해 해당 package를 스캔해 component를 찾겠다 -->
+<context:component-scan base-package="package명"/>
 ```
 
 만약 어노테이션 기능을 쓰지 않는다면 다음과 같이 설정해준다.
@@ -111,6 +111,16 @@ Configure Namespaces에서 'aop, beans, context'체크박스를 체크해서 사
 - @Component : 개발자가 직접 작성한 class를 bean으로 등록한다.
     - value : bean id 설정( 디폴트값 : 클래스명의 카멜표기법 )
 - @Aspect : 해당 클래스를 부가기능 class(Aspect)로 등록한다.
+    - @After : 핵심기능(Target) 이후 해당 부가기능(Advice) 실행
+        - pointcut = "execution(* 패키지나 클래스나 메서드특정)" : Target 지정
+    - @Before : 핵심기능(Target) 이전 해당 부가기능(Advice) 실행
+       - pointcut = "execution(* 패키지나 클래스나 메서드특정)" : Target 지정
+    - @AfterReturning : 핵심기능(Target)에서 return 이후 해당 부가기능(Advice) 실행
+        - pointcut = "execution(* 패키지나 클래스나 메서드특정)" : Target 지정
+    - @AfterThrowing : 핵심기능(Target)에서 throw 이후 해당 부가기능(Advice) 실행
+        - pointcut = "execution(* 패키지나 클래스나 메서드특정)" : Target 지정
+    - @Around : 핵심기능(Target) 전, 후로 해당 부가기능(Advice) 실행
+        - pointcut = "within(패키지나 클래스나 메서드특정)" : Target 지정
 - @Scope : 말그대로 scope설정한다.( 디폴트값 : singleton )
 - @Lazy : 해당 bean이 사용될 때 객체 뒤늦게 생성되도록 설정한다.
 - @Autowired : 의존성 주입을 가능케 한다. 클래스 안에 멤버변수가 클래스 생성과 같이 생성되어야 하는 의존성을 가지고 있으면 autowired를 해당 멤버변수에 설정해 클래스가 생성되면 같이 생성되게 할 수 있다.
