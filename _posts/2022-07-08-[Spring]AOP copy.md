@@ -6,7 +6,7 @@ toc_sticky: true
 ---
 
 
-# AOP란?
+# 1.AOP란?
 AOP(Aspect Oriented Programming)란 관점 지향 프로그래밍 기법이다. 어떤 관점으로 프로그래밍을 할까? **핵심로직이냐, 부가로직이냐가 바로 그 관점**이다. **로직들을 핵심내용인지 부가내용인지에 대한 관점으로 나누고 나뉜 파트들 중 공통된 부분들은 하나로 묶어 모듈화시키는 기법**이 바로 AOP다. 일반적으로 프로그래밍 언어들은 OOP(Object Oriented Programming)라는 객체 지향 프로그래밍 언어다. 로직을 객체 단위로 묶어서 개발하는 방식이고 일반적으로 이 방법이 가장 친근할 것이다. AOP는 이런 OOP와 상호보완 관계를 갖는다. 예제를 통해 확인해본다.         
 
 **예제)**             
@@ -24,19 +24,42 @@ Aspect끝메시지 : 끝메시지
 
 이렇게 **핵심로직과 부가로직을 분리하여 재사용할 수 있게된다.**        
 
-# AOP 개념(단어)
+# 2.AOP 개념(단어)
 - Concern : '관심사'라고도 불리고 위 예제에서 부가로직을 의미한다. 여러 객체에서 반복적으로 쓰이는 부가기능 로직. 이때 부가로직들은 여러 객체에서 나뉘어 있으므로 흩어진 관심사(Croscutting COncerns)라고 부르기도 한다.
 - Aspect : 흩어진 관심사를 하나로 묶어서 모듈화한 것을 의미한다.
-- Advice : 실질적으로 어떤 일을 해야할 지에 대한 것, 실질적인 부가기능을 담은 구현체
-- PointCut : JointPoint의 상세한 스펙을 정의한 것. 'A란 메서드의 진입 시점에 호출할 것'과 같이 더욱 구체적으로 Advice가 실행될 지점을 정할 수 있음
-- JointPoint : Advice가 적용될 위치, 끼어들 수 있는 지점. 메서드 진입 지점, 생성자 호출 시점, 필드에서 값을 꺼내올 때 등 다양한 시점에 적용가능
-- Target : Aspect를 적용하는 곳 (클래스, 메서드 .. )
+- Advice : 실질적인 부가기능을 담은 구현체를 의미한다.
+- JointPoint : Advice가 적용될 위치로 부가기능이 핵심기능 전에 실행될지, 후에 실행될지, 리턴값을 받고 실행될지 등의 옵션이 존재한다.
+- PointCut : JointPoint의 상세한 스펙을 정의한 것으로 부가기능을 넣어줄 핵심기능을 명확하게 해준다.
+- Target : Aspect가 적용될 클래스나 메서드를 의미한다.
 
+# 3.스프링 AOP설정
+1. AOP는 스프링 자체에서 제공하는 기능이 아니다. 그러므로 pom.xml에 다음과 같은 의존성을 추가해서 사용한다.
 
+```xml
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>4.3.30.RELEASE</version>
+</dependency>
+```
 
+2. Spring Bean Configuration file 설정          
+Configure Namespaces에서 'aop, beans, context'체크박스를 체크해서 사용         
 
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+    
+    ...
 
-
+</beans>
+```
 
 
 
