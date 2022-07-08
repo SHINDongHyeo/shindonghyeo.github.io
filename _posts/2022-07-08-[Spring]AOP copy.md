@@ -33,9 +33,24 @@ Aspect끝메시지 : 끝메시지
 - Target : Aspect가 적용될 클래스나 메서드를 의미한다.
 
 # 3.스프링 AOP설정
-1. AOP는 스프링 자체에서 제공하는 기능이 아니다. 그러므로 pom.xml에 다음과 같은 의존성을 추가해서 사용한다.
+1. AOP는 스프링 자체에서 제공하는 기능이 아니다. 그러므로 pom.xml에 다음과 같은 의존성을 추가해서 사용한다. 또한 AOP를 더 쉽게 사용하기 위해 어노테이션 의존성도 추가해준다.
 
 ```xml
+<!-- AOP 적용시에 필요한 추가 library - byte code를 실시간 동적으로 자동 생성해주는 기능의 library -->
+<dependency>
+    <groupId>cglib</groupId>
+    <artifactId>cglib</artifactId>
+    <version>2.2.2</version>
+</dependency>
+
+<!-- AOP 기능의 framework - spring이 AOP 기술을 활용해서 spring 스럽게 활용 -->
+<dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjweaver</artifactId>
+    <version>1.7.3</version>
+</dependency>
+
+<!-- AOP 기능의 어노테이션 사용 -->
 <dependency>
     <groupId>org.springframework</groupId>
     <artifactId>spring-context</artifactId>
@@ -61,48 +76,46 @@ Configure Namespaces에서 'aop, beans, context'체크박스를 체크해서 사
 </beans>
 ```
 
+3. Spring Bean Configuration file 내용작성           
 
+```xml
+<!-- AOP기법 사용하겠다 -->
+<aop:aspectj-autoproxy/>
 
-- <AOP 구조>
-- <aop:config>
-    - <aop:poincut> : expression="execution(**실행될 메서드,클래스 위치**)" / id="**해당포인트컷 id**"
-        - <aop:aspect> : ref="**aspect로 쓸 bean id**" 
-            - <aop:after/before> : method="**실행시킬 aspect bean 속 메서드명**" / pointcut-ref="**실행시킬 포인트컷 id**"
-            - <aop:after-returning> : method="**실행시킬 aspect bean 속 메서드명**" / pointcut-ref="**실행시킬 포인트컷 id**" / returning="**return한 값의 변수명**"
-            - <aop:after-throwing> : method="**실행시킬 aspect bean 속 메서드명**" / pointcut-ref="**실행시킬 포인트컷 id**" / throwing="**throw한 예외의 변수명**"
+<!-- 어노테이션 기능 사용하겠다 -->
+<context:annotation-config/>
 
+<!-- 어노테이션 기능을 위해 해당 주소를 스캔해 component를 찾겠다 -->
+<context:component-scan base-package="주소"/>
+```
 
+만약 어노테이션 기능을 쓰지 않는다면 다음과 같이 설정해준다.
 
+```xml
+<aop:config>
+    <aop:poincut> : expression="execution(**실행될 메서드,클래스 위치**)" / id="**해당포인트컷 id**"
+        <aop:aspect> : ref="**aspect로 쓸 bean id**" 
+            <aop:after> : method="**실행시킬 aspect bean 속 메서드명**" / pointcut-ref="**실행시킬 포인트컷 id**"
+            <aop:before> : method="**실행시킬 aspect bean 속 메서드명**" / pointcut-ref="**실행시킬 포인트컷 id**"
+            <aop:after-returning> : method="**실행시킬 aspect bean 속 메서드명**" / pointcut-ref="**실행시킬 포인트컷 id**" / returning="**return한 값의 변수명**"
+            <aop:after-throwing> : method="**실행시킬 aspect bean 속 메서드명**" / pointcut-ref="**실행시킬 포인트컷 id**" / throwing="**throw한 예외의 변수명**"
+        <aop:aspect/>
+    <aop:poincut/>
+<aop:config/>
+```
 
-
-어노테이션
-- <context:annotation-config/> : 
-- <context:component-scan base-package="step03.aop.biz.annotation, common"/>
-@Configuration : class가 bean 구성임을 알려준다.
-@Bean : 개발자가 직접 제어 불가능한 class를 bean으로 등록한다
-속성
-- name = "" : bean id 설정( 디폴트값 : 클래스명의 카멜표기법 )
-
-@Component : 개발자가 직접 작성한 class를 bean으로 등록한다
-속성
-- value = "" : bean id 설정( 디폴트값 : 클래스명의 카멜표기법 )
-
-@Aspect : 해당 클래스가 부가기능 class다라는 것을 알려줌
-
-@Scope : 말그대로 scope설정( 디폴트값 : singleton)
-@Lazy : 해당 빈이 사용될 때 객체 생성
-
-
-
-@Autowired : 의존성 주입을 가능케 한다. 클래스 안에 멤버변수가 클래스 생성과 같이 생성되어야 하는 의존성을
-가지고 있으면 autowired를 해당 멤버변수에 설정해 클래스가 생성되면 같이 생성되게 할 수 있다.
-@Qualifier("bean명") :
-autowired에서 다형성을 지닌 멤버변수에 autowired 설정을 해준다면? (멤버변수가 인터페이스고, 인터페이스를 구현한
-클래스가 여러개 있다) 이때 어떤 구현 클래스가 들어올지 모르기 때문에 이를 확정지어주어야 한다.
-이때 qualifier에서 구현클래스를 명확히 알려줘서 해결한다.
-
-
-
-@Repository : DAO용도의 class에만 적용 권장된다. 이름에 의미를 부여해서 사용을 권장한다
+# 4.스프링 어노테이션(+ AOP 어노테이션)
+- @Configuration : 해당 class가 bean 구성임을 알려준다.
+- @Bean : 개발자가 직접 제어 불가능한 class를 bean으로 등록한다.
+    - name : bean id 설정( 디폴트값 : 클래스명의 카멜표기법 )
+- @Component : 개발자가 직접 작성한 class를 bean으로 등록한다.
+    - value : bean id 설정( 디폴트값 : 클래스명의 카멜표기법 )
+- @Aspect : 해당 클래스를 부가기능 class(Aspect)로 등록한다.
+- @Scope : 말그대로 scope설정한다.( 디폴트값 : singleton )
+- @Lazy : 해당 bean이 사용될 때 객체 뒤늦게 생성되도록 설정한다.
+- @Autowired : 의존성 주입을 가능케 한다. 클래스 안에 멤버변수가 클래스 생성과 같이 생성되어야 하는 의존성을 가지고 있으면 autowired를 해당 멤버변수에 설정해 클래스가 생성되면 같이 생성되게 할 수 있다.
+- @Qualifier("bean명") : autowired에서 다형성을 지닌 멤버변수에 autowired 설정을 해준다면? (멤버변수가 인터페이스고, 인터페이스를 구현한 클래스가 여러개 있다) 이때 어떤 구현 클래스가 들어올지 모르기 때문에 이를 확정지어주어야 한다. 이때 qualifier에서 구현클래스를 명확히 알려줘서 해결한다.
+- @Repository : DAO용도의 class에만 적용 권장된다. 이름에 의미를 부여해서 사용을 권장한다
 선언된 package를 scan tag로 등록한다.
-@Service : DAO와 Controller 사이 Service클래스라는 것을 알려주기 위해 사용된다.
+- @Service : DAO와 Controller 사이 Service클래스라는 것을 알려주기 위해 사용된다.
+
