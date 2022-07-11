@@ -24,7 +24,7 @@ Aspect끝메시지 : 끝메시지
 
 이렇게 **핵심로직과 부가로직을 분리하여 재사용할 수 있게된다.**        
 
-# 2.AOP 개념(단어)
+## 1.1 AOP 개념(단어)
 - Concern : '관심사'라고도 불리고 위 예제에서 부가로직을 의미한다. 여러 객체에서 반복적으로 쓰이는 부가기능 로직. 이때 부가로직들은 여러 객체에서 나뉘어 있으므로 흩어진 관심사(Croscutting COncerns)라고 부르기도 한다.
 - Aspect : 흩어진 관심사를 하나로 묶어서 모듈화한 것을 의미한다.
 - Advice : 실질적인 부가기능을 담은 구현체를 의미한다.
@@ -32,7 +32,7 @@ Aspect끝메시지 : 끝메시지
 - PointCut : JointPoint의 상세한 스펙을 정의한 것으로 부가기능을 넣어줄 핵심기능을 명확하게 해준다.
 - Target : Aspect가 적용될 클래스나 메서드를 의미한다.
 
-# 3.스프링 AOP설정
+## 1.2스프링 AOP설정
 1. AOP는 스프링 자체에서 제공하는 기능이 아니다. 그러므로 pom.xml에 다음과 같은 의존성을 추가해서 사용한다. 또한 AOP를 더 쉽게 사용하기 위해 어노테이션 의존성도 추가해준다.
 
 ```xml
@@ -104,7 +104,7 @@ Configure Namespaces에서 'aop, beans, context'체크박스를 체크해서 사
 <aop:config/>
 ```
 
-# 4.스프링 어노테이션(+ AOP 어노테이션)
+## 1.3스프링 어노테이션(+ AOP 어노테이션)
 - @Configuration : 해당 class가 bean 구성임을 알려준다.
 - @Bean : 개발자가 직접 제어 불가능한 class를 bean으로 등록한다.
     - name : bean id 설정( 디폴트값 : 클래스명의 카멜표기법 )
@@ -144,30 +144,30 @@ Configure Namespaces에서 'aop, beans, context'체크박스를 체크해서 사
 
 
 
-# Spring MVC
+# 2.Spring MVC
 
-## Controller
+## 2.1 Controller
 
-### RequestMapping
+### 2.1.1 RequestMapping
 해당 메서드의 url을 설정. 즉, view단에서 해당 메서드를 호출할 때 주소 설정
 
-### String반환타입 메서드와 return "주소";
+### 2.1.2 String반환타입 메서드와 return "주소";
 - return "주소"; : 해당 메서드의 request를 보낼 주소를 설정한다. "forward:주소", "redirect:주소" 로 원하는 방식 설정이 가능하고 적지 않을 경우 디폴트로 forward방식을 사용하고, servlet-mapping에 대한 설정을 해놓았을 경우(prefix, suffix 설정같은 것들) 해당 설정대로 적용된다.
 
-### ModelAndView반환타입 메서드와 return ModelAndView객체;
-- ModelAttribute("attribute변수명") 변수타입 변수명 : response에 attribute로 해당 변수를 "atttribute변수명"이라는 이름으로 저장해서 보내는 것. 이를 통해 response를 받은 jsp단에서 requestScope을 이용해 해당 변수를 이용할 수 있다.
+### 2.1.3 ModelAndView반환타입 메서드와 return ModelAndView객체;
+- @ModelAttribute("attribute변수명") 변수타입 변수명 : response에 attribute로 해당 변수를 "atttribute변수명"이라는 이름으로 저장해서 보내는 것. 이를 통해 response를 받은 jsp단에서 requestScope을 이용해 해당 변수를 이용할 수 있다.
 - ModelAndView객체.addObject("변수명","넣을값") : ModelAndView에 해당 변수를 저장한다.
 - ModelAndView객체.setViewName("request주소") : request할 주소를 적는다.
 - return ModelAndView객체; : ModelAndView객체를 담아서 setViewName에 설정된 주소로 보낸다.
 
-### Model반환타입 메서드와 return "주소";
+### 2.1.4 Model반환타입 메서드와 return "주소";
 - .addAttribute(attribute명, 넣을값) : Model객체에 attribute로 attribute명이라는 이름으로 해당값을 저장해준다.
 - return "주소"; : 해당 메서드의 request를 보낼 주소를 설정한다.
 
 
 
 
-## URI template
+### 2.1.5 URI template
 가변적인 url을 사용하면서 페이지자체는 같은 페이지를 보여주는 방식
 
 - @RequestMapping("uri주소") : uri주소값으로 중괄호를 이용해 가변적인 값을 표현한다.          
@@ -175,7 +175,7 @@ ex) @RequsestMapping("abc/{changingValue}") 라면 abc/1, abc/999, abc/qwe 등�
 
 - (@PathVariable String changingValue) : 바로 위 예제에서 {changingValue}로 가변적인 uri주소 부분을 표현했다. 이 가변적인 값을 변수로 받고 싶다면 메서드 파라미터 부분에 다음과 같이 해당 변수명으로 가변적인 uri주소값을 받을 수 있다.
 
-## Cookie, Session Tracking
+### 2.1.6 Cookie, Session Tracking
 - 메서드 파리미터로(@CookieValue("key값") String 새로운변수명) : cookie값을 받아와 새로운변수에 저장함
 - 메서드 파라미터로(HttpSession 세션변수명) : HttpSession을 파라미터로 받아온다.
 - Controller 클래스 선언 구에 SessionAttributes({"key1값", "key2값", ... }) : Session상 attribute값 받아오기
