@@ -129,3 +129,54 @@ Configure Namespaces에서 'aop, beans, context'체크박스를 체크해서 사
 선언된 package를 scan tag로 등록한다.
 - @Service : DAO와 Controller 사이 Service클래스라는 것을 알려주기 위해 사용된다.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Spring MVC
+
+## Controller
+
+### RequestMapping
+해당 메서드의 url을 설정. 즉, view단에서 해당 메서드를 호출할 때 주소 설정
+
+### String반환타입 메서드와 return "주소";
+- return "주소"; : 해당 메서드의 request를 보낼 주소를 설정한다. "forward:주소", "redirect:주소" 로 원하는 방식 설정이 가능하고 적지 않을 경우 디폴트로 forward방식을 사용하고, servlet-mapping에 대한 설정을 해놓았을 경우(prefix, suffix 설정같은 것들) 해당 설정대로 적용된다.
+
+### ModelAndView반환타입 메서드와 return ModelAndView객체;
+- ModelAttribute("attribute변수명") 변수타입 변수명 : response에 attribute로 해당 변수를 "atttribute변수명"이라는 이름으로 저장해서 보내는 것. 이를 통해 response를 받은 jsp단에서 requestScope을 이용해 해당 변수를 이용할 수 있다.
+- ModelAndView객체.addObject("변수명","넣을값") : ModelAndView에 해당 변수를 저장한다.
+- ModelAndView객체.setViewName("request주소") : request할 주소를 적는다.
+- return ModelAndView객체; : ModelAndView객체를 담아서 setViewName에 설정된 주소로 보낸다.
+
+### Model반환타입 메서드와 return "주소";
+- .addAttribute(attribute명, 넣을값) : Model객체에 attribute로 attribute명이라는 이름으로 해당값을 저장해준다.
+- return "주소"; : 해당 메서드의 request를 보낼 주소를 설정한다.
+
+
+
+
+## URI template
+가변적인 url을 사용하면서 페이지자체는 같은 페이지를 보여주는 방식
+
+- @RequestMapping("uri주소") : uri주소값으로 중괄호를 이용해 가변적인 값을 표현한다.          
+ex) @RequsestMapping("abc/{changingValue}") 라면 abc/1, abc/999, abc/qwe 등등 모든 abc/ 이후 모든 값에 대한 uri를 호출할 경우 실행되는 메서드를 지정하는 모습이다. 하지만 abc/qwe/asd 같이 슬래쉬가 한 번더 생기는 경우는 실행되지 않는다. 다음과 같이 깊이가 깊어진 부분에 대한 가변적 uri처리를 하고 싶다면 @RequsestMapping("abc/{changingValue}/{chagingValue2}") 이런식으로 한 번더 처리해줘야 한다.
+
+- (@PathVariable String changingValue) : 바로 위 예제에서 {changingValue}로 가변적인 uri주소 부분을 표현했다. 이 가변적인 값을 변수로 받고 싶다면 메서드 파라미터 부분에 다음과 같이 해당 변수명으로 가변적인 uri주소값을 받을 수 있다.
+
+## Cookie, Session Tracking
+- 메서드 파리미터로(@CookieValue("key값") String 새로운변수명) : cookie값을 받아와 새로운변수에 저장함
+- 메서드 파라미터로(HttpSession 세션변수명) : HttpSession을 파라미터로 받아온다.
+- Controller 클래스 선언 구에 SessionAttributes({"key1값", "key2값", ... }) : Session상 attribute값 받아오기
+- SessionStatus status : HttpSession으로 세션을 받지 않고 SessionAttributes로 세션을 받았다면 이 세션을 종료시키기 위해 다음과 같이 status 객체를 만들고 status.setComplete();을 통해 세션을 종료시킨다.
