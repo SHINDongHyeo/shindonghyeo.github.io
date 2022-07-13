@@ -6,7 +6,7 @@ toc_sticky: true
 ---
 
 # 1.스프링(Spring)이란?
-스프링은 스프링 프레임워크라고도 불리며 **자바 기반의 웹 어플리케이션을 만들기 위한 프레임워크**를 의미한다.
+스프링은 스프링 프레임워크라고도 불리며 **자바 기반의 웹 어플리케이션을 만들기 위한 프레임워크**를 의미한다. 스프링은 말 그대로 개발자들에게 겨울이 지나고 봄과 같은 세상이 왔다는 의미로 이름이 붙여졌다.
 
 ## 1.1 스프링 특징
 - WAS가 내장되어 있음
@@ -17,6 +17,13 @@ toc_sticky: true
 
 
 # 2.스프링 부트(Spring Boot)란?
+spring boot는 spring 상위호환이라고 볼 수 있다.
+차이점
+-dependency설정이 짧아짐
+-configuration설정이 짧아짐
+-내장서버가 있어서 서버 구동시간이 단축됨
+-jar파일로 간단한 배포가능함
+
 spring framework에 비해 더 간단해짐. spring framework가 @Controller로 동기적인 방식을 이용했다면 spring boot에서는 @Controller외에 @RestController도 사용하여 비동기적인 방식을 사용할 수 있다.
 
 ex)
@@ -29,6 +36,8 @@ public class 컨트롤러클래스명{
 
 }
 다음 코드에서 "확인!"이라는 문자열을 비동기적인 느낌으로 반환해준다!!!!!
+
+
 
 
 
