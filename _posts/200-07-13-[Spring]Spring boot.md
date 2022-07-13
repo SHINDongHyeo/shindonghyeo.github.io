@@ -6,7 +6,7 @@ toc_sticky: true
 ---
 
 # 1.스프링(Spring)이란?
-스프링은 스프링 프레임워크라고도 불리며 **자바 기반의 웹 어플리케이션을 만들기 위한 프레임워크**를 의미한다. 스프링은 말 그대로 개발자들에게 겨울이 지나고 봄과 같은 세상이 왔다는 의미로 이름이 붙여졌다.
+스프링은 말 그대로 개발자들에게 겨울이 지나고 봄과 같은 세상이 왔다는 의미로 이름이 붙여졌다. 스프링은 스프링 프레임워크라고도 불리며 **자바 기반의 웹 어플리케이션을 만들기 위한 프레임워크**를 의미한다. 프레임워크란 반복작업들을 최소화하기 위해 반복되는 부분에 대한 도구를 미리 만들어 놓은 도움장치라고 생각할 수 있다. 즉, 스프링(스프링 프레임워크)는 자바
 
 ## 1.1 스프링 특징
 - WAS가 내장되어 있음
@@ -44,7 +44,6 @@ public class 컨트롤러클래스명{
 
 
 
-
 개발환경 특징
 application.property 와 pom.xml 내용이 매핑된다. pom에는 있는데 application에 해당 설정이 없을 경우 오류 발생 가능!
 
@@ -53,3 +52,75 @@ application.property 와 pom.xml 내용이 매핑된다. pom에는 있는데 app
 
 src/main/resources 하단 banner.txt 라는 이름의 파일을 만들면
 스프링부트 실행 시 콘솔창에 원하는 내용(배너)를 출력할 수 있게 해준다. (그냥 banner.txt 에 문자입력하면 그대로 출력됨)
+
+
+
+
+
+
+
+
+
+
+## 단위테스트
+네트워크, 데이터베이스 등이 엮인 상태에서 특정 구역만 단위 테스트하기에는 어려움이 있다. 이를 해결하기 위한 것이 MOCK
+
+
+브라우저 없이 서버 없이 API만 이용해 get/post 방식으로 http 통신 가능한 방식
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
+
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+
+
+
+>>>실행
+mock.perform(get("/"))
+    .andExpect(status().isOk())
+    .andDo(print());
+
+
+
+
+mock.perform(get("/param").param("id", "data"))      // parameter값 넘겨주기
+    .andExpect(status().isOk())
+    .andDo(print());
+
+
+mock.perform(get("/validate"))
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.name").value("playdata"))
+		.andDo(print());
+
+
+
+
+
+
+
+# REST API
+- get은 가져올 때 주로 사용
+- post는 저장할 때 주로 사용
+- 
+
+
+URI 설계 시 주의점
+- 대문자 가독성때문에 잘 안씀
+- 가독성때문에 하이픈 잘 안씀
+- 가독성때문에 언더바 잘 안씀
+- 파일 확장자 잘 안씀
+- 슬래시는 계층관계 표현
+- URI마지막은 슬래시 붙이지 않는다
+- 같은 URI는 같은 리소스를 사용한다는 느낌으로 분류해야함
