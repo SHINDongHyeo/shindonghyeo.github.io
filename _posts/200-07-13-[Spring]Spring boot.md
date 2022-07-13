@@ -17,14 +17,15 @@ toc_sticky: true
 
 
 # 2.스프링 부트(Spring Boot)란?
-spring boot는 spring 상위호환이라고 볼 수 있다.
-차이점
--dependency설정이 짧아짐
--configuration설정이 짧아짐
--내장서버가 있어서 서버 구동시간이 단축됨
--jar파일로 간단한 배포가능함
+spring boot는 spring 상위호환이라고 볼 수 있다. 간단히 spring과 spring boot의 차이점을 알아본다.           
 
-spring framework에 비해 더 간단해짐. spring framework가 @Controller로 동기적인 방식을 이용했다면 spring boot에서는 @Controller외에 @RestController도 사용하여 비동기적인 방식을 사용할 수 있다.
+- 비동기적인 방식을 쉽게 이용할 수 있다
+- dependency설정이 짧아졌다
+- configuration설정이 짧아졌다
+- 내장서버가 있어서 서버 구동시간이 단축되었다
+- jar파일로 간단한 배포 가능하다
+
+
 
 ex)
 @RestController
