@@ -124,3 +124,16 @@ URI 설계 시 주의점
 - 슬래시는 계층관계 표현
 - URI마지막은 슬래시 붙이지 않는다
 - 같은 URI는 같은 리소스를 사용한다는 느낌으로 분류해야함
+
+
+
+
+# try, catch
+@ExceptionHandler로 exception을 잡아서 처리가능
+
+
+
+# Spring Data JPA
+인터페이스를 구현하고 @EnableJpaRepositories 어노테이션을 이용해 basePackages로 설정해주면 미리 만들어진 메서드명 생성 문법만 맞춰서 메서드를 만들면 알아서 DB연결, sql문 실행 등을 해주는 스프링 기능
+
+ex)
