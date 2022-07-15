@@ -111,29 +111,58 @@ mock.perform(get("/validate"))
 
 
 # REST API
-- get은 가져올 때 주로 사용
-- post는 저장할 때 주로 사용
-- 
+REST(Representational State Transfer)는 현재 URI를 통해 자원을 표시하고 HTTP 메서드(클라이언트가 웹 서버에게 사용자 요청의 목적이나 종류를 알리는 수단으로 GET, POST, PUT, DELETE 등이 있다)를 이용해 자원의 행위를 규정한다.             
+
+**대표적 HTTP 메서드 종류**
+- GET : 조회
+- POST : 등록
+- PUT : 수정
+- DELETE : 삭제
 
 
 URI 설계 시 주의점
-- 대문자 가독성때문에 잘 안씀
-- 가독성때문에 하이픈 잘 안씀
-- 가독성때문에 언더바 잘 안씀
-- 파일 확장자 잘 안씀
-- 슬래시는 계층관계 표현
-- URI마지막은 슬래시 붙이지 않는다
-- 같은 URI는 같은 리소스를 사용한다는 느낌으로 분류해야함
+- 대문자 : 가독성 때문에 잘 안씀
+- 하이픈 : 가독성 때문에 잘 안씀
+- 언더바 : 가독성 때문에 잘 안씀
+- 파일 확장자 : 가독성 때문에 잘 안씀
+- 슬래시는 계층관계 표현한다(URI 마지막은 슬래시 붙이지 않는다)
 
 
 
+# 예외처리
+@ExceptionHandler로 exception을 잡아서 처리가능하다
 
-# try, catch
-@ExceptionHandler로 exception을 잡아서 처리가능
+
+```java
+@GetMapping("employee")
+public 반환타입 클래스명 throws Exception{
+   // 핵심 로직
+   // 만약 여기서 Exception이 발생한다면?
+}
+
+// 여기서 Exception을 받음!
+@ExceptionHandler
+public void handler(Exception e) {
+    // 원하는 처리 가능
+    System.out.println("오류발생!!!");
+    e.printStackTrace();
+}
+
+```
 
 
 
 # Spring Data JPA
 인터페이스를 구현하고 @EnableJpaRepositories 어노테이션을 이용해 basePackages로 설정해주면 미리 만들어진 메서드명 생성 문법만 맞춰서 메서드를 만들면 알아서 DB연결, sql문 실행 등을 해주는 스프링 기능
 
-ex)
+- insert : save(엔티티 객체)
+- select : findById(기본키), getOne(기본키)
+- update : save(엔티티 객체)
+- delete : deleteById(기본키), delete(엔티티 객체)
+
+이 밖에 메서드명에 넣는 요소
+- Containing : where에서 like연산자 %원하는내용% 역할
+- And : where에서 and 역할
+- IgnoreCase : 대소문자 구별 안하겠다는 의미
+- Between : where에서 between 역할
+- OrderByIdDesc : 정렬(Asc로 바꾸면 역으로 정렬)
