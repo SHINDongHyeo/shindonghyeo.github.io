@@ -20,13 +20,8 @@ toc_sticky: true
 spring boot는 spring 상위호환이라고 볼 수 있다. 간단히 spring과 spring boot의 차이점을 알아본다.           
 
 - 비동기적인 방식을 쉽게 이용할 수 있다
-- dependency설정이 짧아졌다
-- configuration설정이 짧아졌다
-- 내장서버가 있어서 서버 구동시간이 단축되었다
-- jar파일로 간단한 배포 가능하다
 
-
-
+```java
 ex)
 @RestController
 public class 컨트롤러클래스명{
@@ -36,85 +31,40 @@ public class 컨트롤러클래스명{
 	}
 
 }
-다음 코드에서 "확인!"이라는 문자열을 비동기적인 느낌으로 반환해준다!!!!!
+// 다음 코드에서 "확인!"이라는 문자열을 비동기적인 느낌으로 반환해준다!!!!!
+```                 
+
+- dependency설정이 짧아졌다
+- configuration설정이 짧아졌다
+- 내장서버가 있어서 서버 구동시간이 단축되었다
+- jar파일로 간단한 배포 가능하다
+- 개발환경 특징 : application.property 와 pom.xml 내용이 매핑된다. pom에는 있는데 application에 해당 설정이 없을 경우 오류 발생 가능!
+- src/main/resources 하단 banner.txt 라는 이름의 파일을 만들면 스프링부트 실행 시 콘솔창에 원하는 내용(배너)를 출력할 수 있게 해준다. (그냥 banner.txt 에 문자입력하면 그대로 출력됨)
 
 
 
+# 3. 단위테스트
+네트워크, 데이터베이스 등이 엮인 상태에서 특정 구역만 단위 테스트하기에는 어려움이 있다. 이를 해결하기 위한 것이 MOCK. 브라우저 없이 서버 없이 API만 이용해 get/post 방식으로 http 통신 가능한 방식
 
-
-
-
-개발환경 특징
-application.property 와 pom.xml 내용이 매핑된다. pom에는 있는데 application에 해당 설정이 없을 경우 오류 발생 가능!
-
-
-
-
-src/main/resources 하단 banner.txt 라는 이름의 파일을 만들면
-스프링부트 실행 시 콘솔창에 원하는 내용(배너)를 출력할 수 있게 해준다. (그냥 banner.txt 에 문자입력하면 그대로 출력됨)
-
-
-
-
-
-
-
-
-
-
-## 단위테스트
-네트워크, 데이터베이스 등이 엮인 상태에서 특정 구역만 단위 테스트하기에는 어려움이 있다. 이를 해결하기 위한 것이 MOCK
-
-
-브라우저 없이 서버 없이 API만 이용해 get/post 방식으로 http 통신 가능한 방식
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
-
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-
-
-
+```java
 >>>실행
 mock.perform(get("/"))
     .andExpect(status().isOk())
     .andDo(print());
 
-
-
-
 mock.perform(get("/param").param("id", "data"))      // parameter값 넘겨주기
     .andExpect(status().isOk())
     .andDo(print());
-
 
 mock.perform(get("/validate"))
 		.andExpect(status().isOk())
 		.andExpect(jsonPath("$.name").value("playdata"))
 		.andDo(print());
+```
 
 
 
-
-
-
-
-
-
-
-
-# 예외처리
+# 4. 예외처리
 @ExceptionHandler로 exception을 잡아서 처리가능하다
 
 
@@ -137,11 +87,11 @@ public void handler(Exception e) {
 
 
 
-# Spring Data JPA
+# 5. Spring Data JPA
 인터페이스를 구현하고 @EnableJpaRepositories 어노테이션을 이용해 basePackages로 설정해주면 미리 만들어진 메서드명 생성 문법만 맞춰서 메서드를 만들면 알아서 DB연결, sql문 실행 등을 해주는 스프링 기능
 
 - insert : save(엔티티 객체)
-- select : findById(기본키), getOne(기본키)
+- select : findById(기본키)
 - update : save(엔티티 객체)
 - delete : deleteById(기본키), delete(엔티티 객체)
 
