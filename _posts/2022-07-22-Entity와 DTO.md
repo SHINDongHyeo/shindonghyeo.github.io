@@ -1,6 +1,6 @@
 ---
 author_profile: true
-categories: "spring"
+categories: "db"
 toc: true
 toc_sticky: true
 ---
