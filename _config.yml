@@ -23,7 +23,7 @@ name                     : "신동혁"
 description              : "소프트웨어 개발자까지의 기록 남기기"
 url                      : "https://shindonghyeo.github.io/"
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : "https://github.com/SHINDongHyeo/shindonghyeo.github.io"
+repository               : "SHINDongHyeo/shindonghyeo.github.io"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : "/assets/logo.ico/gitpagelogo.png" # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
