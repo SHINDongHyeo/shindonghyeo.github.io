@@ -1,6 +1,6 @@
 ---
 author_profile: true
-categories: "java", "data structure"
+categories: "java"
 toc: true
 toc_sticky: true
 ---
