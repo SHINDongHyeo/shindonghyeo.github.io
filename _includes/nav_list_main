@@ -16,7 +16,8 @@
 
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "python" %}
+                    <!-- {% if category[0] == "python" %} -->
+                    {% if "python" in category %}
                         <li><a href="/categories/python" class="">python({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
@@ -70,7 +71,8 @@
         <span class="nav__sub-title">웹</span>
         <ul>
             {% for category in site.categories %}
-                {% if category[0] == "web" %}
+                <!-- {% if category[0] == "web" %} -->
+                {% if "web" in category %}
                     <li><a href="/categories/web" class="">웹({{category[1].size}})</a></li>
                 {% endif %}
             {% endfor %}
