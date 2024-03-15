@@ -1,83 +1,66 @@
-# Site Settings
-remote_theme: chrisrhymes/bulma-clean-theme
-lang: en
-title: Bulma Clean Theme
-tagline: Bulma Clean Theme
-email: your-email@domain.com
+# Configurations
+title:            Jekyll Gitbook
+longtitle:        Jekyll Gitbook
+author:           HE Tao
+email:            sighingnow@gmail.com
 description: >
-  The demo site for Bulma Clean Theme, made for Jekyll and GitHub pages websites
-baseurl: "/bulma-clean-theme"
-url: "https://www.csrhymes.com"
-permalink: pretty
-#favicon: /path/to/favicon.png
-gh_sponsor: chrisrhymes
-#hide_share_buttons: true
-#theme_color: '#eeeeee'
-#fixed_navbar: top
-#direction: one of <ltr, rtl, auto>, default: ltr
+  Build Jekyll site with the GitBook style.
 
-paginate: 5
-paginate_path: "/blog/page:num"
+version:          1.0
+gitbook_version:  3.2.3
 
-# Disqus Comments
-disqus:
-  # Leave shortname blank to disable comments site-wide.
-  # Disable comments for any post by adding `comments: false` to that post's YAML Front Matter.
-  # shortname: my_disqus_shortname
-  shortname: csrhymes
+url:              'https://sighingnow.github.io'
+baseurl:          '/jekyll-gitbook'
+rss:              RSS
 
+# bootstrap: use the remote theme for the site itself
+remote_theme: sighingnow/jekyll-gitbook
 
-plugins:
-  - jekyll-sitemap
-  - jekyll-paginate
-  - jekyll-feed
-  - jekyll-seo-tag
-  - kramdown-parser-gfm
-  - jekyll-redirect-from
+toc:
+  enabled: true
+  h_min: 1
+  h_max: 3
 
-exclude: 
-  - Gemfile
-  - clean-theme.gemspec
-  - Gemfile.lock
-  - node_modules
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
+# customize the link favicon in header, will be {{site.baseurl}}/{{site.favicon_path}}
+favicon_path:     /assets/gitbook/images/favicon.ico
 
-livereload: true
+# markdown render engine.
+markdown:         kramdown
+kramdown:
+  auto_ids:               true
+  input:                  GFM
+  math_engine:            mathjax
+  smart_quotes:           lsquo,rsquo,ldquo,rdquo
+  toc_levels:             1..6
+  syntax_highlighter:     rouge
+  syntax_highlighter_opts:
+    guess_lang:           true
 
-sass:
-  style: compressed
-  source_dir: _sass
+syntax_highlighter_style: colorful
 
-#google_analytics: UA-code-here
+markdown_ext:             markdown,mkdown,mkdn,mkd,md
 
-defaults:
-  -
-    scope:
-      path: ""
-      type: "pages"
-    values:
-      show_sidebar: true
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      author: "C.S. Rhymes"
-      layout: post
-      image: https://via.placeholder.com/1200x800
-      show_sidebar: true
+# Permalinks
+permalink:                /:categories/:year-:month-:day-:title:output_ext
 
-markdown: kramdown
-highlighter: rouge
+# Disqus comments
+# disqushandler:            sighingnow
 
-footer_menu: example_footer_menu
+exclude:
+  - _drafts
 
 collections:
-  products: 
+  pages:
     output: true
-    layout: product
-    image: https://via.placeholder.com/800x600
-    show_sidebar: false
+    permalink: /:collection/:path/
+
+page_width: 800px
+
+destination:      ./_site
+incremental:      false
+regenerate:       true
+
+plugins:
+  - jekyll-feed
+  - jekyll-readme-index
+  - jemoji
