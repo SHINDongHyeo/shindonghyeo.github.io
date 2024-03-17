@@ -29,7 +29,15 @@
                     <h2>최신글</h2>
                     {% for post in reversed_posts %}
                         <div>
-                            <a href="{{post.url}}">{{post.title}}</a>
+                            <div class="m-1 d-flex">
+                                <div class="w-75 d-flex">
+                                    <a class="m-3 p-1 align-middle overflow-hidden" style="white-space:nowrap; text-overflow:ellipsis;;" href="{{post.url}}">{{post.title}}</a>
+                                    <p class="m-3 p-1 align-middle bg-info rounded-2">{{post.category}}</p>
+                                </div>
+                                <div class="w-25 d-flex justify-content-end">
+                                    <p class="m-3">{{post.date | date:"%Y-%m-%d"}}</p>
+                                </div>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
