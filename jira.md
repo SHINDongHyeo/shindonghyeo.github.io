@@ -1,6 +1,6 @@
 ---
 layout: category
-title: Jira
+title: jira
 permalink: /jira
 ---
 

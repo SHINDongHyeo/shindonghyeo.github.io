@@ -1,7 +1,7 @@
 ---
 layout: category
-title: CS
-permalink: /CS
+title: cs
+permalink: /cs
 ---
 
 
