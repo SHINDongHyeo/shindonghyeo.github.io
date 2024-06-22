@@ -1,6 +1,6 @@
 ---
 category: javascript
-title : "[Next.js]TypeORM - MySQL 에러 : Error: ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client"
+title : "[Nest.js]TypeORM - MySQL 에러 : Error: ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client"
 layout: post
 cover : /assets/image/nodejs.png
 ---
