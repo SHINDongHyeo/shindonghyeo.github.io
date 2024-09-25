@@ -22,6 +22,7 @@ Node.js를 통해 API 개발 완료
 ```
 sudo apt-get update
 sudo apt-get install certbot
+sudo apt-get install python3-certbot-nginx # nginx 플러그인
 ```
 
 Certbot이란 Let's Encrypt의 공식 클라이언트다. 이를 통해 SSL/TLS 인증서를 발급하고 관리할 수 있다.
