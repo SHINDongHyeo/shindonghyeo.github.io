@@ -138,6 +138,14 @@ nginx 재시작을 통해 수정된 내용을 적용한다.
 
 ```
 sudo systemctl restart nginx
+# 혹은 아래 명령어
+sudo service nginx reload
+# 혹은 아래 명령어
+sudo nginx -s reload
 ```
 
+만약 nginx 설정 파일에 문제가 있는 것 같다면 문법 검사를 진행한다.
+```
+sudo nginx -t
+```
 
