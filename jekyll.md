@@ -1,9 +1,7 @@
 ---
 layout: category
-title: Jekyll
+title: jekyll
 permalink: /jekyll
 ---
 
 zzz
-
-
