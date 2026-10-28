@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 5);
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>안녕하세요, 신동혁입니다 👋</h1>
+			<p>{SITE_DESCRIPTION}</p>
+			<h2>최근 글</h2>
+			<ul>
+				{posts.map((post) => (
+					<li>
+						<a href={`/blog/${post.id}/`}>{post.data.title}</a> · <FormattedDate date={post.data.pubDate} />
+					</li>
+				))}
+			</ul>
+			<p><a href="/blog">전체 글 보기 →</a></p>
+		</main>
+		<Footer />
+	</body>
+</html>
