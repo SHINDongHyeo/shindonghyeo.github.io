@@ -1,10 +1,14 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
-import { GITHUB_URL } from '../consts';
+import { Banner, Prose } from 'shindonghyeo-ui';
+import { GITHUB_URL, SITE_TITLE } from '../consts';
+import Base from '../layouts/Base.astro';
 ---
 
-<Layout title="소개" description="신동혁 소개" pubDate={new Date('2026-10-28')}>
-	<p>안녕하세요, 개발자 신동혁입니다.</p>
-	<p>이 페이지는 <code>src/pages/about.astro</code>에서 수정할 수 있어요.</p>
-	<p><a href={GITHUB_URL}>GitHub</a></p>
-</Layout>
+<Base title={`소개 | ${SITE_TITLE}`} description="신동혁 소개">
+	<Banner slot="hero" eyebrow="About" title="소개" description="개발자 신동혁입니다." />
+	<Prose>
+		<p>안녕하세요, 개발자 신동혁입니다.</p>
+		<p>이 페이지는 <code>src/pages/about.astro</code>에서 수정할 수 있어요.</p>
+		<p><a href={GITHUB_URL}>GitHub</a></p>
+	</Prose>
+</Base>

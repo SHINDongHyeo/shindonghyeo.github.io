@@ -1,0 +1,19 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { PostList } from 'shindonghyeo-ui';
+import { formatDate, readingMinutes } from '../utils';
+
+interface Props {
+	posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+const items = posts.map((post) => ({
+	href: `/blog/${post.id}/`,
+	title: post.data.title,
+	description: post.data.description,
+	meta: [formatDate(post.data.pubDate), `${readingMinutes(post.body)}분 읽기`],
+}));
+---
+
+<PostList items={items} />

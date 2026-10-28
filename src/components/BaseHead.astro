@@ -1,11 +1,12 @@
 ---
-// Import the global.css file here so that it is included on
+// Import the global styles here so that they are included on
 // all pages through the use of the <BaseHead /> component.
+import 'shindonghyeo-ui/styles.css';
 import '../styles/global.css';
 import type { ImageMetadata } from 'astro';
+import { themeInitScript } from 'shindonghyeo-ui';
 import FallbackImage from '../assets/blog-placeholder-1.jpg';
 import { SITE_TITLE } from '../consts';
-import { Font } from 'astro:assets';
 
 interface Props {
 	title: string;
@@ -32,7 +33,14 @@ const { title, description, image = FallbackImage } = Astro.props;
 />
 <meta name="generator" content={Astro.generator} />
 
-<Font cssVariable="--font-atkinson" preload />
+<!-- 저장된 테마나 시스템 설정을 첫 렌더 전에 적용해 깜빡임을 막는다 -->
+<script is:inline set:html={themeInitScript} />
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link
+	rel="stylesheet"
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+/>
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />

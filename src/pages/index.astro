@@ -1,36 +1,117 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
+import { Banner, Button, GitHubIcon, GradientText, SectionTitle } from 'shindonghyeo-ui';
 import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import PostList from '../components/PostList.astro';
+import { GITHUB_URL, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Base from '../layouts/Base.astro';
 
-const posts = (await getCollection('blog'))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 5);
+const allPosts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const posts = allPosts.slice(0, 5);
+const latest = allPosts[0]?.data.pubDate;
 ---
 
-<!doctype html>
-<html lang="ko">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>안녕하세요, 신동혁입니다 👋</h1>
-			<p>{SITE_DESCRIPTION}</p>
-			<h2>최근 글</h2>
-			<ul>
-				{posts.map((post) => (
-					<li>
-						<a href={`/blog/${post.id}/`}>{post.data.title}</a> · <FormattedDate date={post.data.pubDate} />
-					</li>
-				))}
-			</ul>
-			<p><a href="/blog">전체 글 보기 →</a></p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Base title={SITE_TITLE} description={SITE_DESCRIPTION}>
+	<Banner slot="hero" size="lg">
+		<img class="avatar" src={`${GITHUB_URL}.png?size=200`} alt="신동혁 프로필 사진" width="88" height="88" />
+		<p class="eyebrow">Dev Log</p>
+		<h1>안녕하세요,<br /><GradientText>개발자 신동혁</GradientText>입니다.</h1>
+		<p class="description">{SITE_DESCRIPTION}</p>
+		<div class="actions">
+			<Button variant="primary" href="/blog">글 둘러보기 →</Button>
+			<Button href={GITHUB_URL} target="_blank" rel="noopener">
+				<GitHubIcon size={16} />
+				GitHub
+			</Button>
+		</div>
+		<dl class="stats">
+			<div>
+				<dt>쓴 글</dt>
+				<dd>{allPosts.length}개</dd>
+			</div>
+			{latest && (
+				<div>
+					<dt>최근 업데이트</dt>
+					<dd><FormattedDate date={latest} /></dd>
+				</div>
+			)}
+		</dl>
+	</Banner>
+
+	<SectionTitle>
+		최근 글
+		<a slot="action" href="/blog">전체 보기 →</a>
+	</SectionTitle>
+	<PostList posts={posts} />
+</Base>
+
+<style>
+	.avatar {
+		display: block;
+		width: 88px;
+		height: 88px;
+		margin-bottom: 24px;
+		border-radius: 50%;
+		background: var(--sd-bg-elevated);
+		box-shadow:
+			0 0 0 4px var(--sd-bg),
+			0 0 0 6px var(--sd-accent-soft),
+			var(--sd-shadow);
+	}
+	.eyebrow {
+		margin: 0 0 14px;
+		color: var(--sd-accent);
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+	h1 {
+		font-size: 2.6rem;
+		line-height: 1.25;
+		letter-spacing: -0.045em;
+	}
+	.description {
+		margin: 18px 0 28px;
+		color: var(--sd-text-muted);
+		font-size: 1.1rem;
+	}
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+	.stats {
+		display: flex;
+		gap: 40px;
+		margin: 40px 0 0;
+		padding-top: 24px;
+		border-top: 1px dashed var(--sd-border);
+	}
+	.stats dt {
+		color: var(--sd-text-muted);
+		font-size: 0.8rem;
+	}
+	.stats dd {
+		margin: 2px 0 0;
+		color: var(--sd-text-strong);
+		font-weight: 700;
+	}
+	@media (max-width: 640px) {
+		.avatar {
+			width: 72px;
+			height: 72px;
+		}
+		h1 {
+			font-size: 1.9rem;
+		}
+		.description {
+			font-size: 1rem;
+		}
+		.stats {
+			gap: 28px;
+		}
+	}
+</style>

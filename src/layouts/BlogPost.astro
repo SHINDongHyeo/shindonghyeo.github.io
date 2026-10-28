@@ -1,84 +1,174 @@
 ---
+import type { MarkdownHeading } from 'astro';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
+import { Banner, CalendarIcon, Chip, ClockIcon, Prose, ReadingProgress, Toc } from 'shindonghyeo-ui';
 import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+import Base from './Base.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type PostLink = { id: string; title: string };
+type Props = CollectionEntry<'blog'>['data'] & {
+	readingMinutes: number;
+	headings: MarkdownHeading[];
+	prev?: PostLink;
+	next?: PostLink;
+};
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, readingMinutes, headings, prev, next } =
+	Astro.props;
+const tocItems = headings
+	.filter((h) => h.depth === 2 || h.depth === 3)
+	.map((h) => ({ id: h.slug, text: h.text, depth: h.depth }));
+const hasToc = tocItems.length >= 2;
 ---
 
-<html lang="ko">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
-	</head>
+<Base title={`${title} | ${SITE_TITLE}`} description={description} image={heroImage} wide>
+	<ReadingProgress slot="header" client:load />
 
-	<body>
-		<Header />
-		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
+	<Banner slot="hero" title={title} description={description} wide>
+		<a slot="eyebrow" href="/blog">← 글 목록</a>
+		<div class="meta">
+			<Chip>
+				<CalendarIcon slot="icon" />
+				<FormattedDate date={pubDate} />
+			</Chip>
+			<Chip>
+				<ClockIcon slot="icon" />
+				{readingMinutes}분 읽기
+			</Chip>
+			{updatedDate && (
+				<Chip>
+					수정 <FormattedDate date={updatedDate} />
+				</Chip>
+			)}
+		</div>
+	</Banner>
+
+	<div class:list={['layout', { 'has-toc': hasToc }]}>
+		<article>
+			{hasToc && (
+				<div class="toc-mobile">
+					<Toc items={tocItems} variant="inline" />
 				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{updatedDate && (
-								<div class="last-updated-on">
-									수정: <FormattedDate date={updatedDate} />
-								</div>
-							)}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
-</html>
+			)}
+			{heroImage && <Image class="hero-image" width={1360} height={680} src={heroImage} alt="" />}
+			<Prose>
+				<slot />
+			</Prose>
+
+			{(prev || next) && (
+				<nav class="post-nav" aria-label="이전/다음 글">
+					{prev ? (
+						<a href={`/blog/${prev.id}/`}>
+							<span class="label">← 이전 글</span>
+							<span class="title">{prev.title}</span>
+						</a>
+					) : (
+						<span />
+					)}
+					{next && (
+						<a class="next" href={`/blog/${next.id}/`}>
+							<span class="label">다음 글 →</span>
+							<span class="title">{next.title}</span>
+						</a>
+					)}
+				</nav>
+			)}
+		</article>
+
+		{hasToc && (
+			<div class="toc-desktop">
+				<Toc items={tocItems} client:idle />
+			</div>
+		)}
+	</div>
+</Base>
+
+<style>
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 24px;
+	}
+
+	.layout.has-toc {
+		display: grid;
+		grid-template-columns: minmax(0, var(--sd-content-width)) 220px;
+		justify-content: space-between;
+		gap: 56px;
+	}
+	article {
+		min-width: 0;
+		max-width: var(--sd-content-width);
+	}
+	.hero-image {
+		display: block;
+		width: 100%;
+		margin-bottom: 48px;
+		border-radius: var(--sd-radius-lg);
+	}
+	.toc-mobile {
+		display: none;
+		margin-bottom: 40px;
+	}
+
+	/* 이전/다음 글 */
+	.post-nav {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 12px;
+		margin-top: 72px;
+		padding-top: 32px;
+		border-top: 1px solid var(--sd-border);
+	}
+	.post-nav a {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		padding: 18px 20px;
+		border: 1px solid var(--sd-border);
+		border-radius: var(--sd-radius-md);
+		transition:
+			border-color 0.2s ease,
+			box-shadow 0.2s ease;
+	}
+	.post-nav a:hover {
+		border-color: var(--sd-accent);
+		box-shadow: var(--sd-shadow);
+	}
+	.post-nav .next {
+		grid-column: 2;
+		text-align: right;
+	}
+	.post-nav .label {
+		color: var(--sd-text-muted);
+		font-size: 0.8rem;
+	}
+	.post-nav .title {
+		color: var(--sd-text-strong);
+		font-weight: 600;
+		line-height: 1.5;
+	}
+
+	@media (max-width: 1023px) {
+		.layout.has-toc {
+			display: block;
+		}
+		.toc-desktop {
+			display: none;
+		}
+		.toc-mobile {
+			display: block;
+		}
+	}
+	@media (max-width: 640px) {
+		.post-nav {
+			grid-template-columns: 1fr;
+		}
+		.post-nav .next {
+			grid-column: auto;
+		}
+	}
+</style>

@@ -1,0 +1,35 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Container } from 'shindonghyeo-ui';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	image?: ImageMetadata;
+	wide?: boolean;
+}
+
+const { title, description, image, wide = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead title={title} description={description} image={image} />
+	</head>
+	<body>
+		<Header>
+			<slot name="header" />
+		</Header>
+		<slot name="hero" />
+		<main>
+			<Container wide={wide}>
+				<slot />
+			</Container>
+		</main>
+		<Footer />
+	</body>
+</html>
