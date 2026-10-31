@@ -7,7 +7,6 @@ const section = '/' + (pathname.match(/[^\/]+/)?.[0] ?? '');
 const links = [
 	{ href: '/', label: '홈' },
 	{ href: '/blog', label: '글' },
-	{ href: '/about', label: '소개' },
 ].map((link) => ({ ...link, active: link.href === section }));
 ---
 
