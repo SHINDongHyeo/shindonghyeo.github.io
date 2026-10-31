@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import { AccentText, Banner, Button, GitHubIcon, SectionTitle } from 'shindonghyeo-ui';
-import FormattedDate from '../components/FormattedDate.astro';
 import PostList from '../components/PostList.astro';
 import { GITHUB_URL, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Base from '../layouts/Base.astro';
@@ -10,11 +9,10 @@ const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 const posts = allPosts.slice(0, 5);
-const latest = allPosts[0]?.data.pubDate;
 ---
 
 <Base title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<Banner slot="hero" size="lg">
+	<Banner slot="hero">
 		<img class="avatar" src={`${GITHUB_URL}.png?size=200`} alt="신동혁 프로필 사진" width="88" height="88" />
 		<p class="eyebrow">Dev Log</p>
 		<h1>안녕하세요,<br /><AccentText>개발자 신동혁</AccentText>입니다.</h1>
@@ -26,18 +24,6 @@ const latest = allPosts[0]?.data.pubDate;
 				GitHub
 			</Button>
 		</div>
-		<dl class="stats">
-			<div>
-				<dt>쓴 글</dt>
-				<dd>{allPosts.length}개</dd>
-			</div>
-			{latest && (
-				<div>
-					<dt>최근 업데이트</dt>
-					<dd><FormattedDate date={latest} /></dd>
-				</div>
-			)}
-		</dl>
 	</Banner>
 
 	<SectionTitle>
@@ -83,22 +69,6 @@ const latest = allPosts[0]?.data.pubDate;
 		flex-wrap: wrap;
 		gap: 10px;
 	}
-	.stats {
-		display: flex;
-		gap: 40px;
-		margin: 40px 0 0;
-		padding-top: 24px;
-		border-top: 1px dashed var(--sd-border);
-	}
-	.stats dt {
-		color: var(--sd-text-muted);
-		font-size: 0.8rem;
-	}
-	.stats dd {
-		margin: 2px 0 0;
-		color: var(--sd-text-strong);
-		font-weight: 700;
-	}
 	@media (max-width: 640px) {
 		.avatar {
 			width: 72px;
@@ -109,9 +79,6 @@ const latest = allPosts[0]?.data.pubDate;
 		}
 		.description {
 			font-size: 1rem;
-		}
-		.stats {
-			gap: 28px;
 		}
 	}
 </style>
