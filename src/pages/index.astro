@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import { Banner, Button, GitHubIcon, GradientText, SectionTitle } from 'shindonghyeo-ui';
+import { AccentText, Banner, Button, GitHubIcon, SectionTitle } from 'shindonghyeo-ui';
 import FormattedDate from '../components/FormattedDate.astro';
 import PostList from '../components/PostList.astro';
 import { GITHUB_URL, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
@@ -17,7 +17,7 @@ const latest = allPosts[0]?.data.pubDate;
 	<Banner slot="hero" size="lg">
 		<img class="avatar" src={`${GITHUB_URL}.png?size=200`} alt="신동혁 프로필 사진" width="88" height="88" />
 		<p class="eyebrow">Dev Log</p>
-		<h1>안녕하세요,<br /><GradientText>개발자 신동혁</GradientText>입니다.</h1>
+		<h1>안녕하세요,<br /><AccentText>개발자 신동혁</AccentText>입니다.</h1>
 		<p class="description">{SITE_DESCRIPTION}</p>
 		<div class="actions">
 			<Button variant="primary" href="/blog">글 둘러보기 →</Button>
